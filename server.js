@@ -26,7 +26,8 @@ app.set('view engine', 'ejs');
 app.get('/', (request, response) => { response.send('Walkhome Landing Page');});
 
 // 404
-app.use('*', (request, response) => {response.render('pages/error');});
+//app.use('*', (request, response) => {response.render('pages/error');});
+app.use('*', (request, response) => {response.sejd('Ooops 404...');});
 
 // listener
 app.listen(PORT, () => console.log('listening on PORT',PORT));
