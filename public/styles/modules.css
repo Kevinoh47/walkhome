@@ -1,0 +1,102 @@
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.heading-group-h1 {
+  margin: 0px auto 0px auto;
+}
+
+h1 {
+  font-family: 'Sawarabi Mincho', sans-serif;
+  font-size: 175%;
+  text-align: left;
+  color: blanchedalmond;
+}
+
+h2 {
+  font-size: 175%;
+  text-align: center;
+  font-family: 'Sawarabi Mincho', sans-serif;
+}
+
+#page ul {
+  border: 0px;
+  background-color: grey;
+  padding: 15px;
+  margin: 0px auto 0 px auto;
+  text-align: center;
+}
+
+#page ul li, li {
+  list-style-type: none;
+}
+
+#page .book-details, .return-to-list {
+  margin: 10px 100px 10px 100px;
+  padding: 10px;
+  border: 2px solid black;
+  background-color: #29506D;
+  min-width: 100px;
+}
+
+#page .book-info {
+  padding: 20px 20px 20px 20px;
+  border: 2px double black;
+  background-color: cadetblue;
+  margin: 10px;
+  
+}
+
+.book-title {
+  font-size: 1.25em;
+}
+
+nav ul {
+  display: none;
+  padding: 0;
+  list-style: none;
+  clear: both;
+}
+
+nav:hover ul {
+  display: block;
+}
+
+nav li {
+  margin-right: .4em;
+  font-size: 1.5em;
+  padding: .5em .2em;
+  border-bottom: 1px solid #ccc;
+}
+
+/*When we are below minimum width, the nav list is hidden, but on hover, it displays. But now we want it to display as block not inline.*/
+nav ul li {
+  display: block;
+  border-bottom: none;
+}
+
+nav ul li:hover a {
+  color: #29506D;
+}
+
+.icon-menu {
+  font-size: 3em;
+  float: right;
+}
+
+.hide-me, #hide-me {
+  display: none;
+}
+
+.show-me, #show-me {
+  display: block;
+}

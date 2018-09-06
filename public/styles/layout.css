@@ -1,0 +1,25 @@
+body {
+  font-family: 'Sawarabi Mincho', sans-serif;
+  line-height: 1.5;
+  font-size: 100%;
+  color: black;
+  background-color: blanchedalmond;
+}
+
+#page-header {
+  max-width: 940px;
+  margin: 10px auto 0px auto;
+  padding: 20px;
+  background-color: darkgrey;
+}
+
+#page {
+  max-width: 940px;
+  margin: 0px auto 10px auto;
+  padding: 20px;
+  background-color: grey;
+}
+
+nav {
+  padding: 0.1em;
+}
