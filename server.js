@@ -23,7 +23,9 @@ app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
 // API routes
-app.get('/', (request, response) => { response.send('Walkhome Landing Page');});
+app.get('/', (request, response) => { response.render('index');});
+
+app.get('/address', (request, response) => {response.render('pages/address');});
 
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
