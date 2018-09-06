@@ -1,0 +1,30 @@
+
+#top-head {
+  margin: 0px auto 0px auto;
+  background-color: lightblue;
+}
+
+header section {
+  max-width: 80%;
+  float: left;
+  padding: 0 0 .2em 1em;
+}
+
+select {
+  width: 90%;
+  margin: .2em 5%;
+}
+
+/*this makes the image totally responsive!*/
+img {
+  max-width: 100%;
+}
+
+#filters {
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  font-size: 1em;
+}
