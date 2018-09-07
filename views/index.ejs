@@ -7,7 +7,16 @@
       <h2>Walkhome</h2>
     </div>
     <div id="page">
-
+  <script id="results-template" type="text/x-handlebars-template">
+    <article class="clearfix" data-address="{{address}}" data-lat="{{latitude}}" data-long="{{longitude}}"
+      <h1>{{address}}</h1>
+      <div id="placeholder-img">
+        {{property_img}}
+      </div>
+        {{{description}}}
+        {{walkscore}}
+      </article>
+  </script>
     </div>
     <%- include('partials/footer') %>
   </body>
