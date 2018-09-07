@@ -20,11 +20,12 @@
   },
   "homepage": "https://github.com/Kevinoh47/walkhome#readme",
   "dependencies": {
-    "@google/maps": "^0.5.5",
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "node-geocoder": "^3.22.0",
     "pg": "^7.4.3",
-    "superagent": "^3.8.3"
+    "superagent": "^3.8.3",
+    "urlencode": "^1.1.0"
   }
 }
