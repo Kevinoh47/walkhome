@@ -3,11 +3,24 @@
 require ('dotenv').config();
 const express = require('express');
 const pg = require('pg');
-const superagent = require('superagent');
-let googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GOOGLE_MAPS_API_KEY,
-  Promise: Promise
-});
+// const superagent = require('superagent');
+// const googleMapsClient = require('@google/maps').createClient({
+//   key: process.env.GOOGLE_MAPS_API_KEY,
+//   Promise: Promise
+// });
+
+const NodeGeocoder = require('node-geocoder');
+const options = {
+  provider: 'google',
+  // Optional depending on the providers
+  httpAdapter: 'https', // Default
+  apiKey: process.env.GOOGLE_MAPS_API_KEY, // for Mapquest, OpenCage, Google Premier
+  formatter: null         // 'gpx', 'string', ...
+};
+const geocoder = NodeGeocoder(options);
+
+const urlencode = require('urlencode');
+const walkscoreApiKey = process.env.WALKSCORE_API_KEY;
 
 // application setup
 const app = express();
@@ -40,17 +53,31 @@ app.listen(PORT, () => console.log('listening on PORT',PORT));
 // Helper functions
 function getGoogleMapsData(request, response) {
   const {address, zip, city, state} = request.body;
-  console.log('ADDRESS: ', address, 'zip: ', zip, 'city: ', city, 'state: ', state.toUpperCase());
-
-  const googAddr = `${address}, ${city}, ${state.toUpperCase()}`;
+  const googAddr = `${address}, ${city}, ${state}, ${zip}`;
   console.log('googAddr: ', googAddr);
 
-  googleMapsClient.geocode({address: googAddr})
-    .asPromise()
-    .then((response) => {
-      console.log(response.json.results);
-    })
-    .catch((err) => {
+  geocoder.geocode(googAddr)
+    .then(results => prepWalkScoreRequest(results))
+    .then(walkScoreUrl => getWalkScore(walkScoreUrl))
+    //.then(walkScore => console.log({walkScore})) // in theory, the walkscore values.
+    .catch(function(err) {
       console.log(err);
     });
+}
+
+function getWalkScore(walkScoreUrl) {
+  console.log({walkScoreUrl});
+  app.get(walkScoreUrl, function (req, res) {
+    console.log('getWalkScoreUrl req: ', req);
+    console.log('getWalkScoreUrl res: ', res);
+  });
+}
+
+function prepWalkScoreRequest(results) {
+  console.log('prepWalkScore results input param', results);
+  const {latitude, longitude, formattedAddress} = results[0];
+  const address = urlencode(formattedAddress);
+  const url = `http://api.walkscore.com/score?format=json&address=${address}
+          &lat=${latitude}&lon=${longitude}&wsapikey=${walkscoreApiKey}`;
+  return url;
 }
