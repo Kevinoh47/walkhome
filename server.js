@@ -39,7 +39,7 @@ app.set('view engine', 'ejs');
 app.get('/', (request, response) => { response.render('index');});
 
 app.get('/address', (request, response) => {response.render('pages/address');});
-app.post('/address', getGoogleMapsData);
+app.post('/address', getAddressData);
 
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
@@ -48,28 +48,28 @@ app.use('*', (request, response) => {response.render('pages/error');});
 app.listen(PORT, () => console.log('listening on PORT',PORT));
 
 // Callback functions
-function getGoogleMapsData(request, response) {
-  const {address, zip, city, state} = request.body;
-  const googAddr = `${address}, ${city}, ${state}, ${zip}`;
-  console.log('googAddr: ', googAddr);
-
-  geocoder.geocode(googAddr)
-    .then(results => prepWalkScoreRequest(results))
-    .then(walkScoreUrl => { return getWalkScore(request, response, walkScoreUrl);})
-    .catch(function(err) {
-      console.log({err});
+function getAddressData(request, response) {
+  getGeocodedData(request, response)
+    .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
+    .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
+    .then(addressArr => {
+      response.render('pages/address-results', {address: addressArr});
     });
 }
 
 // Helper functions
+function getGeocodedData(request, response) {
+  const {address, zip, city, state} = request.body;
+  const formattedAddr = `${address}, ${city}, ${state}, ${zip}`;
+  return geocoder.geocode(formattedAddr);
+}
+
 function getWalkScore(request, response, walkScoreUrl){
-  console.log({walkScoreUrl});
-  superagent.get(walkScoreUrl)
+  return superagent.get(walkScoreUrl)
     .then(walkScore => {
       let addressArr = [];
       addressArr.push(walkScore.body);
-      console.log({addressArr});
-      response.render('pages/address-results', {address: addressArr});
+      return addressArr;
     })
     .catch(function(err) {
       console.log({err});
@@ -77,7 +77,6 @@ function getWalkScore(request, response, walkScoreUrl){
 }
 
 function prepWalkScoreRequest(results) {
-  console.log('prepWalkScore results input param', results);
   const {latitude, longitude, formattedAddress} = results[0];
   const address = urlencode(formattedAddress);
   const url = `http://api.walkscore.com/score?format=json&address=${address}
