@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <%-include('../partials/head') %>
+  <body>
+    <%- include('../partials/header') %>
+    <main>
+      <h3>Address Info</h3>
+      <ul class="search-results">
+        <% address.forEach((address) => { %>
+        <li data-address-id="<%= address.ws_link %>"> 
+          <div class="property-container">
+            <section>
+              <span>lat: <%= address.snapped_lat %> lon: <%= address.snapped_lon %></span>
+              <p class="walk-score-rating"> WalkScore Rating: <%= address.walkscore %></p>
+              <p class="walk-score-desc">WalkScore Description: <%= address.description %></p>
+              <img src="<%= address.logo_url %>"/>
+              <img src="<%= address.more_info_icon %>"/>
+              <a href="<%= address.more_info_link %>">more info</a>
+            </section>
+          </div>
+        </li>
+        <% } ) %>
+      </ul>
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <%-include('../partials/head') %>
+  <body>
+    <%- include('../partials/header') %>
+    <div id="page-header">
+      <h2>Address Search</h2>
+    </div>
+    <div id="page">
+      <form id="find-address-info" action="/address" method="post" novalidate>
+        <p>
+          <label>Street Address</label><br>
+          <input type="text" name="address" required>
+        </p>
+        <p>
+          <label>Zip Code</label><br>
+          <input type="text" name="zip" required>
+        </p>
+        <p>
+          <label>City</label><br>
+          <input type="text" name="city" value="Bainbridge Island">
+        </p>
+        <p>
+          <label>State</label><br>
+          <input type="text" name="state" value="Wa">
+        </p>
+        <p>
+          <button name="submit_button" type="submit">Submit</button>
+        </p>
+      </form> 
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
