@@ -53,7 +53,7 @@ function getAddressData(request, response) {
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
     .then(addressArr => {
-      response.render('pages/address-results', {address: addressArr});
+      response.render('pages/address-results', {walkScoreInfo: addressArr});
     });
 }
 
@@ -68,7 +68,8 @@ function getWalkScore(request, response, walkScoreUrl){
   return superagent.get(walkScoreUrl)
     .then(walkScore => {
       let addressArr = [];
-      addressArr.push(walkScore.body);
+      addressArr.push(request.body); //address data
+      addressArr.push(walkScore.body); //walkscore data
       return addressArr;
     })
     .catch(function(err) {
