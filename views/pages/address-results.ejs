@@ -4,22 +4,28 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-      <h3>Address Info</h3>
+      
       <ul class="search-results">
-        <% address.forEach((address) => { %>
-        <li data-address-id="<%= address.ws_link %>"> 
+
+        <li data-address-id="<%= walkScoreInfo[0].address %>"> 
           <div class="property-container">
             <section>
-              <span>lat: <%= address.snapped_lat %> lon: <%= address.snapped_lon %></span>
-              <p class="walk-score-rating"> WalkScore Rating: <%= address.walkscore %></p>
-              <p class="walk-score-desc">WalkScore Description: <%= address.description %></p>
-              <img src="<%= address.logo_url %>"/>
-              <img src="<%= address.more_info_icon %>"/>
-              <a href="<%= address.more_info_link %>">more info</a>
+              <h4>Address Info</h4>
+              <p class="streetAddress"> Street Address: <%= walkScoreInfo[0].address %></p>
+              <p class="city"> City: <%= walkScoreInfo[0].city %></p>
+              <p class="state"> State: <%= walkScoreInfo[0].state %></p>
+              <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
+              <h4>WalkScore Info</h4>
+              <span>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
+              <p class="walk-score-rating"> WalkScore Rating: <%= walkScoreInfo[1].walkscore %></p>
+              <p class="walk-score-desc">WalkScore Description: <%= walkScoreInfo[1].description %></p>
+              <img src="<%= walkScoreInfo[1].logo_url %>"/>
+              <img src="<%= walkScoreInfo[1].more_info_icon %>"/>
+              <a href="<%= walkScoreInfo[1].more_info_link %>">more info</a>
             </section>
           </div>
         </li>
-        <% } ) %>
+
       </ul>
     </main>
     <%- include('../partials/footer') %>
