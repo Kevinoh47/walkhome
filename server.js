@@ -2,20 +2,16 @@
 
 require ('dotenv').config();
 const express = require('express');
-const pg = require('pg');
-// const superagent = require('superagent');
-// const googleMapsClient = require('@google/maps').createClient({
-//   key: process.env.GOOGLE_MAPS_API_KEY,
-//   Promise: Promise
-// });
+// const pg = require('pg');
+
+const superagent = require('superagent');
 
 const NodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'google',
-  // Optional depending on the providers
-  httpAdapter: 'https', // Default
-  apiKey: process.env.GOOGLE_MAPS_API_KEY, // for Mapquest, OpenCage, Google Premier
-  formatter: null         // 'gpx', 'string', ...
+  httpAdapter: 'https',
+  apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  formatter: null
 };
 const geocoder = NodeGeocoder(options);
 
@@ -27,9 +23,9 @@ const app = express();
 const PORT = process.env.PORT;
 
 // database setup
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => console.error(err));
+// const client = new pg.Client(process.env.DATABASE_URL);
+// client.connect();
+// client.on('error', err => console.error(err));
 
 // middleware setup
 // middleware necessary to allow request.body to be parsed
@@ -44,13 +40,14 @@ app.get('/', (request, response) => { response.render('index');});
 
 app.get('/address', (request, response) => {response.render('pages/address');});
 app.post('/address', getGoogleMapsData);
+
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
 
 // listener
 app.listen(PORT, () => console.log('listening on PORT',PORT));
 
-// Helper functions
+// Callback functions
 function getGoogleMapsData(request, response) {
   const {address, zip, city, state} = request.body;
   const googAddr = `${address}, ${city}, ${state}, ${zip}`;
@@ -58,19 +55,25 @@ function getGoogleMapsData(request, response) {
 
   geocoder.geocode(googAddr)
     .then(results => prepWalkScoreRequest(results))
-    .then(walkScoreUrl => getWalkScore(walkScoreUrl))
-    //.then(walkScore => console.log({walkScore})) // in theory, the walkscore values.
+    .then(walkScoreUrl => { return getWalkScore(request, response, walkScoreUrl);})
     .catch(function(err) {
-      console.log(err);
+      console.log({err});
     });
 }
 
-function getWalkScore(walkScoreUrl) {
+// Helper functions
+function getWalkScore(request, response, walkScoreUrl){
   console.log({walkScoreUrl});
-  app.get(walkScoreUrl, function (req, res) {
-    console.log('getWalkScoreUrl req: ', req);
-    console.log('getWalkScoreUrl res: ', res);
-  });
+  superagent.get(walkScoreUrl)
+    .then(walkScore => {
+      let addressArr = [];
+      addressArr.push(walkScore.body);
+      console.log({addressArr});
+      response.render('pages/address-results', {address: addressArr});
+    })
+    .catch(function(err) {
+      console.log({err});
+    });
 }
 
 function prepWalkScoreRequest(results) {
