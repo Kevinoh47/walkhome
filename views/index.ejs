@@ -8,13 +8,15 @@
     </div>
     <div id="page">
   <script id="results-template" type="text/x-handlebars-template">
-    <article class="clearfix" data-address="{{address}}" data-lat="{{latitude}}" data-long="{{longitude}}"
-      <h1>{{address}}</h1>
+    <article class="clearfix" data-address="{{address}}" data-lat="{{latitude}}" data-long="{{longitude}}">
+      <h1>Address: <%= property.PLACEHOLDER %></h1>
       <div id="placeholder-img">
-        {{property_img}}
+        <img id="property_image" src = "<%= property.image_url %>"/>
+        <%# Names for template are placeholder %>
+        <b><%= property.city %></b>
+        <%= property.description %>
+        <% property.walkscore %>
       </div>
-        {{{description}}}
-        {{walkscore}}
       </article>
   </script>
     </div>
