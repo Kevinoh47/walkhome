@@ -7,19 +7,7 @@
       <h2>Walkhome</h2>
     </div>
     <div id="page">
-  <script id="results-template" type="text/x-handlebars-template">
-    <article class="clearfix" data-address="{{address}}" data-lat="{{latitude}}" data-long="{{longitude}}">
-      <h1>Address: <%= property.PLACEHOLDER %></h1>
-      <div id="placeholder-img">
-        <img id="property_image" src = "<%= property.image_url %>"/>
-        <%# Names for template are placeholder %>
-        <b><%= property.city %></b>
-        <%= property.description %>
-        <% property.walkscore %>
-      </div>
-      </article>
-  </script>
     </div>
-    <%- include('partials/footer') %>
   </body>
+  <footer><%- include('partials/footer') %></footer>
 </html>
