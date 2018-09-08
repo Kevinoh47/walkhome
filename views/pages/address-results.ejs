@@ -11,10 +11,18 @@
           <div class="property-container">
             <section>
               <h4>Address Info</h4>
+              <% if (walkScoreInfo[0].address) { %>
               <p class="streetAddress"> Street Address: <%= walkScoreInfo[0].address %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].city) { %>
               <p class="city"> City: <%= walkScoreInfo[0].city %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].state) { %>
               <p class="state"> State: <%= walkScoreInfo[0].state %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].zip) { %>
               <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
+              <% } %>
               <h4>WalkScore Info</h4>
               <span>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
               <p class="walk-score-rating"> WalkScore Rating: <%= walkScoreInfo[1].walkscore %></p>
