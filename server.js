@@ -15,12 +15,6 @@ const options = {
 };
 const geocoder = NodeGeocoder(options);
 
-// we seem to need to do a separate call here to get neighborhood info, since node-geocoder doesn't seem to get that info.
-let googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GOOGLE_MAPS_API_KEY,
-  Promise: Promise
-});
-
 const urlencode = require('urlencode');
 const walkscoreApiKey = process.env.WALKSCORE_API_KEY;
 
@@ -55,12 +49,21 @@ app.listen(PORT, () => console.log('listening on PORT',PORT));
 
 // Callback functions
 function getAddressData(request, response) {
+  let myNeighborhood = [];
+  let hoodStr = 'Unknown';
+  getNeighborhood(request, response)
+    .then(results => {
+      myNeighborhood = results.body.results[0].address_components.filter(obj => {
+        return obj.types.includes('neighborhood');
+      });
+      hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
+    });
+
   getGeocodedData(request, response)
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
     .then(addressArr => {
-      getGoogleMapsData(request, response);
-      response.render('pages/address-results', {walkScoreInfo: addressArr});
+      response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
     });
 }
 
@@ -68,7 +71,6 @@ function getAddressData(request, response) {
 function getGeocodedData(request, response) {
   const {address, zip, city, state} = request.body;
   const formattedAddr = `${address}, ${city}, ${state}, ${zip}`;
-  //console.log(geocoder.geocode(formattedAddr));
   return geocoder.geocode(formattedAddr);
 }
 
@@ -78,7 +80,6 @@ function getWalkScore(request, response, walkScoreUrl){
       let addressArr = [];
       addressArr.push(request.body); //address data
       addressArr.push(walkScore.body); //walkscore data
-      // console.log(walkScore.body);
       return addressArr;
     })
     .catch(function(err) {
@@ -94,22 +95,11 @@ function prepWalkScoreRequest(results) {
   return url;
 }
 
-function getGoogleMapsData(request, response) {
+function getNeighborhood(request, response){
   const {address, zip, city, state} = request.body;
-  const googAddr = `${address}, ${city}, ${state}, ${zip}`;
-  //console.log({googAddr});
-  
-  googleMapsClient.geocode({address: googAddr})
-    .asPromise()
-    .then((response) => {
-      // console.log(response);
-      // console.log(response.json.results);
-      // console.log('geometry', response.json.results[0].geometry);
-      //console.log('trying to get first geometry', response.json.results[0]); //this has NEIGHBORHOOD
-      console.log('neighborhood', response.json.results[0].address_components[2]);
-      console.log('neighborhood shortname', response.json.results[0].address_components[2].short_name);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+  return superagent.get(url);
 }
