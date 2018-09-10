@@ -24,7 +24,7 @@
               <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
               <% } %>
               <% if(neighborhood !=='Unknown') { %>
-              <a class="neighborhood" href="https://www.walkscore.com/WA/<%= walkScoreInfo[0].city %>/<%= neighborhood %>">Neighborhood: <%= neighborhood %></a>
+              <a class="neighborhood" href="https://www.walkscore.com/<%= (walkScoreInfo[0].state).toUpperCase() %>/<%= walkScoreInfo[0].city %>/<%= neighborhood %>">Neighborhood: <%= neighborhood %></a>
               <% } %>
               <h4>WalkScore Info</h4>
               <span>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
