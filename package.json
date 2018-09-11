@@ -4,7 +4,8 @@
   "description": "a mobile app exposing WalkScore API dat for Seattle-area neighborhoods.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,6 @@
     "pg": "^7.4.3",
     "superagent": "^3.8.3",
     "urlencode": "^1.1.0"
-  }
+  },
+  "devDependencies": {}
 }
