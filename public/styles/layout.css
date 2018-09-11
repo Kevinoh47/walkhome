@@ -4,6 +4,10 @@ body {
   font-size: 100%;
   color: black;
   background-color: blanchedalmond;
+  background-image: url('../img/Seattle_Skyline_image.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
 }
 
 #page-header {
@@ -22,4 +26,11 @@ body {
 
 nav {
   padding: 0.1em;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center
 }
