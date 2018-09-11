@@ -3,8 +3,8 @@ body {
   line-height: 1.5;
   font-size: 100%;
   color: black;
-  background-color: blanchedalmond;
-  background-image: url('../img/Seattle_Skyline_image.jpg');
+  background-color: darkblue;
+  background-image: url('../img/seattle_skyline_with_mount_rainier_2014_by_larrygorlin-d86vi3u.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover; 
@@ -15,6 +15,7 @@ body {
   margin: 10px auto 0px auto;
   padding: 20px;
   background-color: darkgrey;
+
 }
 
 #page {
@@ -32,5 +33,31 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  text-align: center
+  text-align: center;
+  color: whitesmoke;
+  background-color: transparent;
+}
+.fill{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+} 
+
+.fill img{
+margin: 0%;
+flex-shrink: 0;
+min-width: 100%;
+min-height: 100%;
+}
+
+#logo{
+height: 25%;
+
+}
+
+.search-results{
+  background-color: lightslategray;
+  text-align: center;
+  
 }
