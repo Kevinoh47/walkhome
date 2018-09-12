@@ -10,9 +10,9 @@
         <li data-address-id="<%= address.ws_link %>"> 
           <div class="property-container">
             <section>
-              <span>lat: <%= address.snapped_lat %> lon: <%= address.snapped_lon %></span>
-              <p class="walk-score-rating"> WalkScore Rating: <%= address.walkscore %></p>
-              <p class="walk-score-desc">WalkScore Description: <%= address.description %></p>
+              <span id="lat-long">lat: <%= address.snapped_lat %> lon: <%= address.snapped_lon %></span>
+              <p class="walk-score-rating"> WalkScore Rating: <div id="walkscore"><%= address.walkscore %></div></p>
+              <p class="walk-score-desc">WalkScore Description: <br> <%= address.description %></p>
               <img src="<%= address.logo_url %>"/>
               <img src="<%= address.more_info_icon %>"/>
               <a href="<%= address.more_info_link %>">more info</a>

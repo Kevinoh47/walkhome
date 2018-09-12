@@ -16,13 +16,15 @@ body {
   margin: 10px auto 0px auto;
   padding: 20px;
   background-color: darkblue;
-  opacity: 0.9;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
   text-align: center;
   color: whitesmoke;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
   width: 300px;
   padding: 25px;
+
 }
 
 #address {
@@ -30,14 +32,14 @@ body {
   margin: 0px auto 10px auto;
   padding: 20px;
   background-color: grey;
-  opacity: 0.9;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
   text-align: center;
   color: whitesmoke;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
   width: 300px;
   padding: 25px;
-  animation-fill-mode: backwards;
 }
 
 
@@ -45,13 +47,14 @@ nav {
   padding: 0.1em;
 }
 
-footer {
+#footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   text-align: center;
   color: whitesmoke;
   background-color: transparent;
+  font-family: 'Pacifico', cursive;
 }
 .fill{
 display: inline-flex;
@@ -77,6 +80,7 @@ height: 25%;
   padding: 20px;
   background-color: darkblue;
   opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
   text-align: center;
   color: whitesmoke;
   border-top-right-radius: 25px;
@@ -90,6 +94,7 @@ height: 25%;
   padding: 20px;
   background-color: grey;
   opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
   text-align: center;
   color: whitesmoke;
   border-bottom-right-radius: 25px;
@@ -106,4 +111,10 @@ height: 25%;
 
 #textbox{
   text-align: center;
+  border-color: transparent;
+}
+
+#walkscore{
+  color: red;
+  
 }
