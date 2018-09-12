@@ -41,8 +41,11 @@ app.get('/', (request, response) => { response.render('index');});
 app.get('/address', (request, response) => {response.render('pages/address');});
 app.post('/address', getAddressData);
 
+// save a search
 app.post('/save-search', saveSearch);
-//app.get(/save-search, showSavedSearches) // todo: show all the saved searches (by user)
+
+// retrieve saved searches
+app.get('/saved-searches', showSavedSearches); // todo: filter by user.
 
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
@@ -51,6 +54,15 @@ app.use('*', (request, response) => {response.render('pages/error');});
 app.listen(PORT, () => console.log('listening on PORT',PORT));
 
 // Callback functions
+function showSavedSearches (request, response) {
+  let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
+
+  client.query(sql)
+    .then(results => {
+      console.log({results});
+      response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
+    });
+}
 function saveSearch(request, response) {
   let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link} = request.body;
   let sql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
