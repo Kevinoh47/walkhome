@@ -1,7 +1,7 @@
 .hamburger {
   display: block;
-  background-color: lightblue;
-  color: blanchedalmond;
+  background-color: transparent;
+  color: darkblue;
 }
 
 .nav-list {
@@ -10,7 +10,7 @@
 
 a, a:link, a:active {
   text-decoration: none;
-  color: #777;
+  color: whitesmoke;
 }
 
 a:hover, a:focus {

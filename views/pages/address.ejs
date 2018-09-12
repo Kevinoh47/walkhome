@@ -3,29 +3,30 @@
   <%-include('../partials/head') %>
   <body>
     <%- include('../partials/header') %>
-    <div id="page-header">
+    <div id="address-header">
       <h2>Address Search</h2>
     </div>
-    <div id="page">
+    <div id="address">
       <form id="find-address-info" action="/address" method="post" novalidate>
         <p>
           <label>Street Address</label><br>
-          <input type="text" name="address" >
+
+          <input id="textbox" type="text" name="address" required>
         </p>
         <p>
           <label>Zip Code</label><br>
-          <input type="text" name="zip" required>
+          <input id="textbox" type="text" name="zip" required>
         </p>
         <p>
           <label>City</label><br>
-          <input type="text" name="city" value="Seattle">
+          <input id="textbox" type="text" name="city" value="Bainbridge Island">
         </p>
         <p>
           <label>State</label><br>
-          <input type="text" name="state" value="Wa">
+          <input id="textbox" type="text" name="state" value="Wa">
         </p>
         <p>
-          <button name="submit_button" type="submit">Submit</button>
+          <button id="submit" name="submit_button" type="submit">Submit</button>
         </p>
       </form> 
     </div>
