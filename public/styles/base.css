@@ -1,13 +1,24 @@
-
+title {
+  text-align: center;
+}
 #top-head {
-  margin: 0px auto 0px auto;
-  background-color: lightblue;
+  background-color: transparent;
+  text-align: center;
+}
+#logo {
+/* font-family: 'Fredericka the Great', cursive; */
+/* font-family: 'Homemade Apple', cursive; */
+/* font-family: 'Comfortaa', cursive; */
+font-family: 'Pacifico', cursive;
+font-size: 5em;
+color: whitesmoke;
 }
 
 header section {
   max-width: 80%;
   float: left;
   padding: 0 0 .2em 1em;
+  text-align: center
 }
 
 select {
@@ -27,4 +38,12 @@ img {
 
 p {
   font-size: 1em;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
 }

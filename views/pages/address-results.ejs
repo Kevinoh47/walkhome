@@ -4,22 +4,59 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-      <h3>Address Info</h3>
-      <ul class="search-results">
-        <% address.forEach((address) => { %>
-        <li data-address-id="<%= address.ws_link %>"> 
+    
+      <h3 class="search-results-head">Address Info</h3>
+      
+       <ul class="search-results">
+
+        <li data-address-id="<%= walkScoreInfo[0].address %>"> 
           <div class="property-container">
             <section>
-              <span>lat: <%= address.snapped_lat %> lon: <%= address.snapped_lon %></span>
-              <p class="walk-score-rating"> WalkScore Rating: <%= address.walkscore %></p>
-              <p class="walk-score-desc">WalkScore Description: <%= address.description %></p>
-              <img src="<%= address.logo_url %>"/>
-              <img src="<%= address.more_info_icon %>"/>
-              <a href="<%= address.more_info_link %>">more info</a>
+              <h4>Address Info</h4>
+              <% if (walkScoreInfo[0].address) { %>
+              <p class="streetAddress"> Street Address: <%= walkScoreInfo[0].address %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].city) { %>
+              <p class="city"> City: <%= walkScoreInfo[0].city %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].state) { %>
+              <p class="state"> State: <%= walkScoreInfo[0].state %></p>
+              <% } %>
+              <% if (walkScoreInfo[0].zip) { %>
+              <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
+              <% } %>
+              <% if(neighborhood !=='Unknown') { %>
+              <a class="neighborhood" href="https://www.walkscore.com/<%= (walkScoreInfo[0].state).toUpperCase() %>/<%= walkScoreInfo[0].city %>/<%= neighborhood %>">Neighborhood: <%= neighborhood %></a>
+              <% } %>
+              <h4>WalkScore Info</h4>
+              <span>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
+              <p class="walk-score-rating"> WalkScore Rating: <%= walkScoreInfo[1].walkscore %></p>
+              <p class="walk-score-desc">WalkScore Description: <%= walkScoreInfo[1].description %></p>
+              <img src="<%= walkScoreInfo[1].logo_url %>"/>
+              <img src="<%= walkScoreInfo[1].more_info_icon %>"/>
+              <span>
+                  <a href="<%= walkScoreInfo[1].more_info_link %>"> More Info </a>
+                  <a href="<%= walkScoreInfo[1].ws_link %>"> Address WalkScore Details </a>
+              </span>
             </section>
           </div>
+          <form id="save-search" action="/save-search" method="post">
+            <input class = "hide-me" type="text" name="address" value="<%= walkScoreInfo[0].address %>">
+            <input class = "hide-me" type="text" name="city" value="<%= walkScoreInfo[0].city %>">
+            <input class = "hide-me" type="text" name="state" value="<%= walkScoreInfo[0].state %>">
+            <input class = "hide-me" type="text" name="zip" value="<%= walkScoreInfo[0].zip %>">
+            <input class = "hide-me" type="text" name="neighborhood" value="<%=neighborhood %>">
+
+            <input class = "hide-me" type="integer" name="walkscore" value="<%= walkScoreInfo[1].walkscore %>">
+            <input class = "hide-me" type="text" name="ws_explanation" value="<%= walkScoreInfo[1].description %>">
+            <input class = "hide-me" type="text" name="ws_link" value="<%=walkScoreInfo[1].ws_link %>">
+
+
+            <button class="show-me" type="submit">Save Search</button> 
+            <br>
+          </form>
         </li>
-        <% } ) %>
+
       </ul>
     </main>
     <%- include('../partials/footer') %>
