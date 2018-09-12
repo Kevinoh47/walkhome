@@ -39,7 +39,7 @@ app.set('view engine', 'ejs');
 app.get('/', (request, response) => { response.render('index');});
 
 app.get('/address', (request, response) => {response.render('pages/address');});
-app.post('/address', getGoogleMapsData);
+app.post('/address', getAddressData);
 
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
@@ -48,28 +48,39 @@ app.use('*', (request, response) => {response.render('pages/error');});
 app.listen(PORT, () => console.log('listening on PORT',PORT));
 
 // Callback functions
-function getGoogleMapsData(request, response) {
-  const {address, zip, city, state} = request.body;
-  const googAddr = `${address}, ${city}, ${state}, ${zip}`;
-  console.log('googAddr: ', googAddr);
+function getAddressData(request, response) {
+  let myNeighborhood = [];
+  let hoodStr = 'Unknown';
+  getNeighborhood(request, response)
+    .then(results => {
+      myNeighborhood = results.body.results[0].address_components.filter(obj => {
+        return obj.types.includes('neighborhood');
+      });
+      hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
+    });
 
-  geocoder.geocode(googAddr)
-    .then(results => prepWalkScoreRequest(results))
-    .then(walkScoreUrl => { return getWalkScore(request, response, walkScoreUrl);})
-    .catch(function(err) {
-      console.log({err});
+  getGeocodedData(request, response)
+    .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
+    .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
+    .then(addressArr => {
+      response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
     });
 }
 
 // Helper functions
+function getGeocodedData(request, response) {
+  const {address, zip, city, state} = request.body;
+  const formattedAddr = `${address}, ${city}, ${state}, ${zip}`;
+  return geocoder.geocode(formattedAddr);
+}
+
 function getWalkScore(request, response, walkScoreUrl){
-  console.log({walkScoreUrl});
-  superagent.get(walkScoreUrl)
+  return superagent.get(walkScoreUrl)
     .then(walkScore => {
       let addressArr = [];
-      addressArr.push(walkScore.body);
-      console.log({addressArr});
-      response.render('pages/address-results', {address: addressArr});
+      addressArr.push(request.body); //address data
+      addressArr.push(walkScore.body); //walkscore data
+      return addressArr;
     })
     .catch(function(err) {
       console.log({err});
@@ -77,10 +88,18 @@ function getWalkScore(request, response, walkScoreUrl){
 }
 
 function prepWalkScoreRequest(results) {
-  console.log('prepWalkScore results input param', results);
   const {latitude, longitude, formattedAddress} = results[0];
   const address = urlencode(formattedAddress);
   const url = `http://api.walkscore.com/score?format=json&address=${address}
           &lat=${latitude}&lon=${longitude}&wsapikey=${walkscoreApiKey}`;
   return url;
+}
+
+function getNeighborhood(request, response){
+  const {address, zip, city, state} = request.body;
+  const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+  return superagent.get(url);
 }
