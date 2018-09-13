@@ -118,3 +118,11 @@ height: 25%;
   color: red;
   
 }
+
+#latLong{
+  display: none;
+}
+
+#walkhome-results{
+  color: orange;
+}
