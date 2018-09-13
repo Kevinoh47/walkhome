@@ -12,9 +12,9 @@
         <strong><em><%= message %></em></strong>
         <% } %>
         <% if (login_required) { %>
-          <form id="login" action="/login" method="post" novalidate>
+          <form id="login" action="/login" method="post">
             <p>
-              <input class="hide-me" type="text" name="email" required>
+              <input class="hide-me" type="text" name="email" value= <%= login_required %> >
             </p>
             <p>
               <button class="show-me" name="submit_button" type="submit">Login</button>

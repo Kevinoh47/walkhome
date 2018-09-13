@@ -56,9 +56,9 @@ app.get('/login-message', (request, response) => {response.render('pages/login-m
 app.use('*', (request, response) => {response.render('pages/error');});
 
 // listener
-app.listen(PORT, () => console.log('listening on PORT',PORT));
+app.listen(PORT, () => console.log('listening on PORT', PORT));
 
-// global user:
+// global user: //todo find a better way than global...
 let myUser;
 
 // Callback functions
@@ -66,18 +66,16 @@ function checkUser(request, response) {
   let {email, first, last, phone} = request.body;
   let values = [email];
   let sql = `SELECT id, first_name FROM walkhome_user WHERE email = $1;`;
-
+  console.log({values});
   client.query(sql,values)
     .then(result => {
-      if (result.rows[0].id){
+      if (result.rows[0] && result.rows[0].id){
         myUser = result.rows[0].id;
         if (!first) {
           first = result.rows[0].first_name;
         }
-        console.log({myUser}, {first});
       }
       if (myUser > 0) {
-        console.log({first});
         return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
       }
       else {
@@ -101,7 +99,6 @@ function checkUser(request, response) {
       response.status(500).send(err);
     });
 }
-
 
 function showSavedSearches (request, response) {
   let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
