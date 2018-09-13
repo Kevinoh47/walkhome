@@ -1,128 +1,49 @@
-body {
-  font-family: 'Sawarabi Mincho', sans-serif;
-  line-height: 1.5;
-  font-size: 100%;
-  color: whitesmoke;
-  background-color: darkblue;
-  background-image: url('../img/seattle_skyline_with_mount_rainier_2014_by_larrygorlin-d86vi3u.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center; 
-}
-
-#address-header {
-  max-width: 940px;
-  margin: 10px auto 0px auto;
-  padding: 20px;
-  background-color: darkblue;
-  opacity: 0.95;
-  font-family: 'Noto Serif KR', sans-serif;
+title {
   text-align: center;
-  color: whitesmoke;
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
-  width: 300px;
-  padding: 25px;
-
 }
-
-#address {
-  max-width: 940px;
-  margin: 0px auto 10px auto;
-  padding: 20px;
-  background-color: grey;
-  opacity: 0.95;
-  font-family: 'Noto Serif KR', sans-serif;
-  text-align: center;
-  color: whitesmoke;
-  border-bottom-right-radius: 25px;
-  border-bottom-left-radius: 25px;
-  width: 300px;
-  padding: 25px;
-}
-
-
-nav {
-  padding: 0.1em;
-}
-
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  color: whitesmoke;
+#top-head {
   background-color: transparent;
-  font-family: 'Pacifico', cursive;
-}
-.fill{
-display: inline-flex;
-justify-content: center;
-align-items: center;
-overflow: hidden;
-} 
-
-.fill img{
-margin: 0%;
-flex-shrink: 0;
-min-width: 100%;
-min-height: 100%;
-}
-
-#logo{
-height: 25%;
-
-}
-.search-results-head{
-  max-width: 940px;
-  margin: 10px auto 0px auto;
-  padding: 20px;
-  background-color: darkblue;
-  opacity: 0.95;
-  font-family: 'Noto Serif KR', sans-serif;
   text-align: center;
-  color: whitesmoke;
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
-  width: 300px;
-  padding: 25px;
 }
-.search-results{
-  max-width: 940px;
-  margin: 0px auto 10px auto;
-  padding: 20px;
-  background-color: grey;
-  opacity: 0.95;
-  font-family: 'Noto Serif KR', sans-serif;
-  text-align: center;
-  color: whitesmoke;
-  border-bottom-right-radius: 25px;
-  border-bottom-left-radius: 25px;
-  width: 300px;
-  padding: 25px;
-}
-#submit{
-  background-color: darkblue;
-  color: whitesmoke;
-  border-radius: 25px;
-  border-color: transparent;
+#logo {
+/* font-family: 'Fredericka the Great', cursive; */
+/* font-family: 'Homemade Apple', cursive; */
+/* font-family: 'Comfortaa', cursive; */
+font-family: 'Pacifico', cursive;
+font-size: 5em;
+color: whitesmoke;
 }
 
-#textbox{
-  text-align: center;
-  border-color: transparent;
+header section {
+  max-width: 80%;
+  float: left;
+  padding: 0 0 .2em 1em;
+  text-align: center
 }
 
-#walkscore{
-  color: red;
-  
+select {
+  width: 90%;
+  margin: .2em 5%;
 }
 
-#latLong{
-  display: none;
+/*this makes the image totally responsive!*/
+img {
+  max-width: 100%;
 }
 
-#walkhome-results{
-  color: orange;
+#filters {
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  font-size: 1em;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
 }
