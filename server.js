@@ -47,13 +47,64 @@ app.post('/save-search', saveSearch);
 // retrieve saved searches
 app.get('/saved-searches', showSavedSearches); // todo: filter by user.
 
+// add a user
+app.post('/login', checkUser);
+app.get('/login', (request, response) => {response.render('pages/login');});
+app.get('/login-message', (request, response) => {response.render('pages/login-message');});
+
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
 
 // listener
 app.listen(PORT, () => console.log('listening on PORT',PORT));
 
+// global user:
+let myUser;
+
 // Callback functions
+function checkUser(request, response) {
+  let {email, first, last, phone} = request.body;
+  let values = [email];
+  let sql = `SELECT id FROM walkhome_user WHERE email = $1;`;
+
+  client.query(sql,values)
+    .then(result => {
+      console.log({result}, 'result rows: ', result.rows);
+      if (result.rows.id) {
+        let myUser = result.rows[0].id;
+        console.log({myUser});
+      }
+
+      // if (result.rowCount === 0) {
+      //   let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
+      //   let values = [email, first, last, phone];
+      //   client.query(sql, values)
+      //     .then(
+      //       result => {
+      //         console.log({result});
+      //         response.render('pages/login-message', {message: `Welcome, ${first}, you are now a Walkhome member!`});
+      //       }
+      //     )
+      //     .catch(err => {
+      //       console.error(err);
+      //       response.status(500).send(err);
+      //     });
+      // }
+      // else if (result.rowCount === 1) {
+      //   result => {
+      //     console.log('result rows', result.rows);
+      //     // let myUser = userId;
+      //     // console.log({myUser});
+      //     // response.render('pages/login-message', {message: `Welcome back ${first}!`});
+      //   };
+      // }
+    })
+    .catch(err => {
+      console.error(err);
+      response.status(500).send(err);
+    });
+}
+
 function showSavedSearches (request, response) {
   let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
 
