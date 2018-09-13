@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <%-include('../partials/head') %>
+  <body>
+    <%- include('../partials/header') %>
+    <p>
+      <strong><em><%= message %></em></strong>
+    </p>
+    <ul>
+      <% searches.forEach((search) => { %>
+      <li>WalkScore: <%= search.walkscore %> </li>
+      <li>WalkScore Explanation: <%= search.ws_explanation %> </li>
+      <li><strong><a href= <%= search.ws_link %>>WalkScore Details</a></strong></li>
+      <% if(search.address) { %>
+      <li>Address: <%= search.address %></li>
+      <% } %>
+      <li>City: <%= search.city %></li>
+      <% if(search.zip) { %>
+        <li>Zip: <%= search.zip %></li>
+      <% } %>
+      <br>
+      <% } )%>
+    </ul>
+    <p>
+      <a id='return-to-address-search' href='/address'>Return to Address Search</a>
+    </p>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
