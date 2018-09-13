@@ -104,3 +104,6 @@ nav ul li:hover a {
         color: 25px;
         border-radius: 25px;
       }
+#lat-long {
+  display: none
+}
