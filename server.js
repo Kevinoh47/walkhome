@@ -59,24 +59,24 @@ app.use('*', (request, response) => {response.render('pages/error');});
 app.listen(PORT, () => console.log('listening on PORT', PORT));
 
 // global user: //todo find a better way than global...
-let myUser;
+//let myUser;
 
 // Callback functions
 function checkUser(request, response) {
   let {email, first, last, phone} = request.body;
   let values = [email];
   let sql = `SELECT id, first_name FROM walkhome_user WHERE email = $1;`;
-  console.log({values});
+  console.log({values}, {email});
   client.query(sql,values)
     .then(result => {
       if (result.rows[0] && result.rows[0].id){
-        myUser = result.rows[0].id;
+        let myUser = result.rows[0].id;
         if (!first) {
           first = result.rows[0].first_name;
         }
-      }
-      if (myUser > 0) {
-        return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
+        if (myUser > 0) {
+          return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
+        }
       }
       else {
         let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
