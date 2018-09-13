@@ -11,6 +11,16 @@
         <% if (message) { %>
         <strong><em><%= message %></em></strong>
         <% } %>
+        <% if (login_required) { %>
+          <form id="login" action="/login" method="post" novalidate>
+            <p>
+              <input class="hide-me" type="text" name="email" required>
+            </p>
+            <p>
+              <button class="show-me" name="submit_button" type="submit">Login</button>
+            </p>
+          </form> 
+        <% } %>
       </p>
     </div>
     <%- include('../partials/footer') %>
