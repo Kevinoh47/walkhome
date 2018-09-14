@@ -41,6 +41,10 @@ app.get('/', (request, response) => { response.render('index');});
 app.get('/address', (request, response) => {response.render('pages/address');});
 app.post('/address', getAddressData);
 
+
+app.post('/save-search', saveSearch);
+//app.get(/save-search, showSavedSearches) // todo: show all the saved searches (by user)
+
 // save a search
 app.post('/save-search', saveSearch);
 
@@ -63,6 +67,7 @@ function showSavedSearches (request, response) {
       response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
     });
 }
+
 function saveSearch(request, response) {
   let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link} = request.body;
   let sql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
