@@ -45,7 +45,7 @@ app.post('/address', getAddressData);
 app.post('/save-search', saveSearch);
 
 // retrieve saved searches
-app.get('/saved-searches', showSavedSearches); // todo: filter by user.
+app.get('/saved-searches', showSavedSearches);
 
 // add a user
 app.post('/login', checkUser);
@@ -109,8 +109,9 @@ function showSavedSearches (request, response) {
 }
 
 function getUserIdByEmail(localStorageEmail) {
+  console.log('inside getUserIdByEmail localStorageEmail', localStorageEmail);
   let sql = `SELECT id FROM walkhome_user WHERE email = ${localStorageEmail};`;
-  client.query(sql)
+  return client.query(sql)
     .then(results =>
     {
       return results;
@@ -121,45 +122,59 @@ function getUserIdByEmail(localStorageEmail) {
 }
 
 function getAddressSearchIdByGuid(myGuid) {
-  let sql = `SELECT id FROM address_search WHERE search_guid = ${myGuid};`;
-  client.query(sql)
+  let castedGuid = myGuid.toString();
+  console.log({castedGuid});
+  let sql = `SELECT id FROM address_search WHERE search_guid = $1`;
+  let values = [castedGuid];
+  console.log({sql}, {values});
+  return client.query(sql, values)
     .then(results =>
     {
+      console.log('LINE 132 getAddressSearchIdByGuid results', results);
       return results;
     })
     .catch(err => {
-      console.error(err);
+      console.error({err});
     });
 
 }
-// source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#2117523
+// source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 function saveSearch(request, response) {
   let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, localStorageEmail} = request.body;
-
+  console.log('LINE 150 saveSearch request', request);
+  console.log('LINE 151 saveSearch request.body', request.body);
+  console.log('LINE 152 localStorageEmail', localStorageEmail);
   const myGuid = uuidv4();
+
   const searchSql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, search_guid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
   const searchValues = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, myGuid];
 
   client.query(searchSql, searchValues)
     .then(results => {
-      console.log({results});
-      const addressSearchId = getAddressSearchIdByGuid(myGuid);
-      const userId = getUserIdByEmail(localStorageEmail);
-      const linkValues = [userId, addressSearchId];
-      const linkSql = `INSERT INTO saved_search(user_id, address_search_id) VALUES($1, $2);`;
-      client.query(linkSql, linkValues)
+      console.log('LINE 160 RESULTS', results);
+      getAddressSearchIdByGuid(myGuid)
+        .then(result => {
+          console.log('YAY result rows[0]dotid', result.rows[0].id);
+          const addressSearchId = result.rows[0].id;
+          console.log('YAY addressSearchId', addressSearchId);
+          const userId = getUserIdByEmail(localStorageEmail);
+          console.log('YAY userId', userId);
+          const linkValues = [userId, addressSearchId];
+          const linkSql = `INSERT INTO saved_search(user_id, address_search_id) VALUES($1, $2);`;
+          client.query(linkSql, linkValues);
+        })
         .catch(err => {
-          console.error(err);
-          response.status(500).send(err);
+          console.error({err});
         });
     })
     .then(results => {
-      console.log({results});
+      console.log('RIGHT BEFORE RENDERING SAVED SEARCH RESULTS PAGE', results);
       response.render('pages/saved-search', {search : searchValues, message: 'you saved a search!'});
     })
     .catch(err => {
@@ -176,7 +191,7 @@ function getAddressData(request, response) {
       myNeighborhood = results.body.results[0].address_components.filter(obj => {
         return obj.types.includes('neighborhood');
       });
-      if(myNeighborhood[0].short_name || myNeighborhood[0].long_name) {
+      if(myNeighborhood && myNeighborhood[0] && (myNeighborhood[0].short_name || myNeighborhood[0].long_name)) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });

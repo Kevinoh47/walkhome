@@ -28,7 +28,9 @@
       $(function() {
         const myEmail = localStorage.getItem('user_email');
         $('#localStorageEmail').text(myEmail);
+        console.log('myEmail', myEmail);
         console.log($('#localStorageEmail'));
+        console.log('localStorageEmail dot text()', $('#localStorageEmail').text());
       });
     </script>
   </body>
