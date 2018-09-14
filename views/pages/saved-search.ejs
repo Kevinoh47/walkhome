@@ -4,7 +4,7 @@
   <body>
     <%- include('../partials/header') %>
       <ul>
-
+        <div id="savedSearch">
         <li>WalkScore: <%= search[5] %> </li>
         <li>WalkScore Explanation: <%= search[6] %> </li>
         <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
@@ -15,7 +15,8 @@
         <% if(search[1]) { %>
           <li>Zip: <%= search[1] %></li>
           <% } %>
-      </ul>
+        </div>     
+        </ul>
       <p>
         <strong><em><%= message %></em></strong>
       </p>
