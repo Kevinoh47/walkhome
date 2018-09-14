@@ -84,3 +84,4 @@ function prepWalkScoreRequest(results) {
           &lat=${latitude}&lon=${longitude}&wsapikey=${walkscoreApiKey}`;
   return url;
 }
+

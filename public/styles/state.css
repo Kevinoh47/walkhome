@@ -17,6 +17,47 @@ a:hover, a:focus {
   color: #29506D;
 }
 
+/*parallax settings for screen scrolling */
+.parallax {
+  background-image: url("../assets/seattle.jpg");
+  text-align: center;
+  min-height: 850px;
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Style the navbar */
+#navbar {
+  overflow: hidden;
+  background-color: #333;
+  z-index: 1;
+}
+
+/* Navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /*media query for screen formatting*/
 @media only screen and (min-width: 640px) {
   header section {
