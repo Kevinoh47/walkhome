@@ -85,6 +85,7 @@ function checkUser(request, response) {
       response.status(500).send(err);
     });
 }
+
 function addUser (request, response) {
   let {email, first, last, phone} = request.body;
   let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
