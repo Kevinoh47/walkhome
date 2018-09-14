@@ -51,13 +51,54 @@ app.post('/save-search', saveSearch);
 // retrieve saved searches
 app.get('/saved-searches', showSavedSearches); // todo: filter by user.
 
+// add a user
+app.post('/login', checkUser);
+app.get('/login', (request, response) => {response.render('pages/login');});
+app.get('/login-message', (request, response) => {response.render('pages/login-message');});
+
 // 404
 app.use('*', (request, response) => {response.render('pages/error');});
 
 // listener
-app.listen(PORT, () => console.log('listening on PORT',PORT));
+app.listen(PORT, () => console.log('listening on PORT', PORT));
 
 // Callback functions
+function checkUser(request, response) {
+  let {email, first} = request.body;
+  let values = [email];
+  let sql = `SELECT id, first_name FROM walkhome_user WHERE email = $1;`;
+  client.query(sql,values)
+    .then(result => {
+      if (result.rows[0] && result.rows[0].id){
+        let myUser = result.rows[0].id;
+        if (!first) { first = result.rows[0].first_name; }
+        if (myUser > 0) {
+          return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
+        }
+      }
+      else {
+        addUser (request, response);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      response.status(500).send(err);
+    });
+}
+function addUser (request, response) {
+  let {email, first, last, phone} = request.body;
+  let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
+  let values = [email, first, last, phone];
+  client.query(sql, values)
+    .then(result => {
+      response.render('pages/login-message', {login_required: email, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
+    })
+    .catch(err => {
+      console.error(err);
+      response.status(500).send(err);
+    });
+}
+
 function showSavedSearches (request, response) {
   let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
 
