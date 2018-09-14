@@ -41,6 +41,10 @@ app.get('/', (request, response) => { response.render('index');});
 app.get('/address', (request, response) => {response.render('pages/address');});
 app.post('/address', getAddressData);
 
+
+app.post('/save-search', saveSearch);
+//app.get(/save-search, showSavedSearches) // todo: show all the saved searches (by user)
+
 // save a search
 app.post('/save-search', saveSearch);
 
@@ -81,6 +85,7 @@ function checkUser(request, response) {
       response.status(500).send(err);
     });
 }
+
 function addUser (request, response) {
   let {email, first, last, phone} = request.body;
   let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
@@ -145,6 +150,7 @@ function uuidv4() {
     return v.toString(16);
   });
 }
+
 function saveSearch(request, response) {
   let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, localStorageEmail} = request.body;
   console.log('LINE 150 saveSearch request', request);

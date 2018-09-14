@@ -100,3 +100,10 @@ nav ul li:hover a {
 .show-me, #show-me {
   display: block;
 }
+      #submit_button {
+        color: 25px;
+        border-radius: 25px;
+      }
+#lat-long {
+  display: none
+}
