@@ -7,6 +7,8 @@
       <strong><em><%= message %></em></strong>
     </p>
     <ul>
+      <h3 id="savedSearch-head">Saved Search</h3>
+      <div id="savedSearch">
       <% searches.forEach((search) => { %>
       <li>WalkScore: <%= search.walkscore %> </li>
       <li>WalkScore Explanation: <%= search.ws_explanation %> </li>
@@ -24,6 +26,7 @@
     <p>
       <a id='return-to-address-search' href='/address'>Return to Address Search</a>
     </p>
+  </div>
     <%- include('../partials/footer') %>
   </body>
 </html>
