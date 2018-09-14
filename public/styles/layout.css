@@ -2,24 +2,152 @@ body {
   font-family: 'Sawarabi Mincho', sans-serif;
   line-height: 1.5;
   font-size: 100%;
-  color: black;
-  background-color: blanchedalmond;
+  color: whitesmoke;
+  background-color: darkblue;
+  background-image: url('../IMG/seattle_skyline_with_mount_rainier_2014_by_larrygorlin-d86vi3u.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center; 
 }
 
-#page-header {
+#address-header {
   max-width: 940px;
   margin: 10px auto 0px auto;
   padding: 20px;
-  background-color: darkgrey;
+  background-color: darkblue;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+
 }
 
-#page {
+#address {
   max-width: 940px;
   margin: 0px auto 10px auto;
   padding: 20px;
   background-color: grey;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
 }
+
 
 nav {
   padding: 0.1em;
+}
+
+#footer {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: whitesmoke;
+  background-color: transparent;
+  font-family: 'Pacifico', cursive;
+}
+.fill{
+display: inline-flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+} 
+
+.fill img{
+margin: 0%;
+flex-shrink: 0;
+min-width: 100%;
+min-height: 100%;
+}
+
+#logo{
+height: 25%;
+
+}
+.search-results-head{
+  max-width: 940px;
+  margin: 10px auto 0px auto;
+  padding: 20px;
+  background-color: darkblue;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+.search-results{
+  line-height: 2;
+  max-width: 940px;
+  margin: 0px auto 10px auto;
+  padding: 20px;
+  background-color: grey;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+#submit{
+  background-color: darkblue;
+  color: whitesmoke;
+  border-radius: 25px;
+  border-color: transparent;
+}
+
+#textbox{
+  text-align: center;
+  border-color: transparent;
+}
+
+#walkscore{
+  color: red;
+  
+}
+
+#latLong{
+  display: none;
+}
+
+#walkhome-results{
+  color: orange;
+}
+
+.show-me{
+  margin: auto;
+  padding: 5px;
+  background-color: darkblue;
+  color: whitesmoke;
+  border-radius: 25px;
+  border-color: transparent;
+  align-content: center;
+}
+
+#savedSearch{
+  max-width: 940px;
+  margin: 0px auto 10px auto;
+  padding: 20px;
+  background-color: grey;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
 }
