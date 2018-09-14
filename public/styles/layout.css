@@ -126,6 +126,7 @@ height: 25%;
 #walkhome-results{
   color: orange;
 }
+
 .show-me{
   margin: auto;
   padding: 5px;
@@ -136,7 +137,7 @@ height: 25%;
   align-content: center;
 }
 
-/* #saveSearch{
+#saveSearch{
   max-width: 940px;
   margin: 0px auto 10px auto;
   padding: 20px;
@@ -149,4 +150,4 @@ height: 25%;
   border-bottom-left-radius: 25px;
   width: 300px;
   padding: 25px;
-} */
+}
