@@ -104,7 +104,6 @@ function showSavedSearches (request, response) {
 
   client.query(sql)
     .then(results => {
-      console.log({results});
       response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
     });
 }
@@ -115,11 +114,7 @@ function saveSearch(request, response) {
   let values = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link];
 
   client.query(sql, values)
-    // .then(
-    //   getIdFromAddressSearchTable(request,response)
-    // )
     .then(results => {
-      console.log({results});
       response.render('pages/saved-search', {search : values, message: 'you saved a search!'});
     })
     .catch(err => {
@@ -127,12 +122,6 @@ function saveSearch(request, response) {
       response.status(500).send(err);
     });
 }
-
-// function getIdFromAddressSearchTable(request,response) {
-//   let {address, zip, city, state, neighborhood} = request.body;
-//   let sql = `SELECT id FROM address_search WHERE address = $1 AND zip = $2 AND city = $3 AND state = $4 and neighborhood =$5;`;
-//   let values = [address, zip, city, state, neighborhood];
-// }
 
 function getAddressData(request, response) {
   let myNeighborhood = [];
@@ -142,7 +131,7 @@ function getAddressData(request, response) {
       myNeighborhood = results.body.results[0].address_components.filter(obj => {
         return obj.types.includes('neighborhood');
       });
-      if(myNeighborhood[0].short_name || myNeighborhood[0].long_name) {
+      if(myNeighborhood && myNeighborhood[0] && (myNeighborhood[0].short_name || myNeighborhood[0].long_name)) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });
