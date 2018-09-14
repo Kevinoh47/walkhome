@@ -35,10 +35,25 @@
               <img src="<%= walkScoreInfo[1].more_info_icon %>"/>
               <span>
                   <br><a href="<%= walkScoreInfo[1].more_info_link %>"> More Info </a><br>
-                  <a href="<%= walkScoreInfo[1].ws_link %>"> Address WalkScore Details </a>
+                  <a href="<%= walkScoreInfo[1].ws_link %>"> Address WalkScore Details </a><br>
               </span>
             </section>
           </div>
+          <form id="save-search" action="/save-search" method="post">
+            <input class = "hide-me" type="text" name="address" value="<%= walkScoreInfo[0].address %>">
+            <input class = "hide-me" type="text" name="city" value="<%= walkScoreInfo[0].city %>">
+            <input class = "hide-me" type="text" name="state" value="<%= walkScoreInfo[0].state %>">
+            <input class = "hide-me" type="text" name="zip" value="<%= walkScoreInfo[0].zip %>">
+            <input class = "hide-me" type="text" name="neighborhood" value="<%=neighborhood %>">
+
+            <input class = "hide-me" type="integer" name="walkscore" value="<%= walkScoreInfo[1].walkscore %>">
+            <input class = "hide-me" type="text" name="ws_explanation" value="<%= walkScoreInfo[1].description %>">
+            <input class = "hide-me" type="text" name="ws_link" value="<%=walkScoreInfo[1].ws_link %>">
+
+
+            <button class="show-me" type="submit">Save Search</button> 
+            <br>
+          </form>
         </li>
 
       </ul>
