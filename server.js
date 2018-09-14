@@ -104,7 +104,6 @@ function showSavedSearches (request, response) {
 
   client.query(sql)
     .then(results => {
-      console.log({results});
       response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
     });
 }
@@ -116,7 +115,6 @@ function saveSearch(request, response) {
 
   client.query(sql, values)
     .then(results => {
-      console.log({results});
       response.render('pages/saved-search', {search : values, message: 'you saved a search!'});
     })
     .catch(err => {
