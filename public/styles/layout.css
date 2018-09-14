@@ -137,6 +137,21 @@ height: 25%;
   align-content: center;
 }
 
+#savedSearch-head{
+  max-width: 940px;
+  margin: 10px auto 0px auto;
+  padding: 20px;
+  background-color: darkblue;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+
 #savedSearch{
   max-width: 940px;
   margin: 0px auto 10px auto;
