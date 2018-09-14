@@ -24,6 +24,8 @@ CREATE TABLE address_search (
   ws_link VARCHAR(510)
 );
 
+ALTER TABLE address_search ADD search_guid UUID;
+
 CREATE TABLE saved_search (
   user_id INT,
   address_search_id INT,
