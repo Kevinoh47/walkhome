@@ -7,22 +7,31 @@
       <h2>Login Status</h2>
     </div>
     <div>
-      <p>
-        <% if (message) { %>
-        <strong><em><%= message %></em></strong>
-        <% } %>
-        <% if (login_required) { %>
-          <form id="login" action="/login" method="post">
-            <p>
-              <input class="hide-me" type="text" name="email" value= <%= login_required %> >
-            </p>
-            <p>
-              <button class="show-me" name="submit_button" type="submit">Login</button>
-            </p>
-          </form> 
-        <% } %>
-      </p>
+      <p id="localStorageEmail" class="hide-me"><%= email %></p>
+      <% if (message) { %>
+      <strong><em><%= message %></em></strong>
+      <% } %>
+      <% if (login_required) { %>
+        <form id="login" action="/login" method="post">
+          <p>
+            <input id="user-email" class="hide-me" type="text" name="email" value= <%= email %> >
+          </p>
+          <p>
+            <button class="show-me" name="submit_button" type="submit">Login</button>
+          </p>
+        </form> 
+      <% } %>
     </div>
     <%- include('../partials/footer') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(function() {
+        const myEmail = $('#localStorageEmail').text();
+        console.log({myEmail});
+        localStorage.setItem('user_email', myEmail);
+        // const retrievedVal = localStorage.getItem('user_email');
+        // console.log(retrievedVal);
+      });
+    </script>
   </body>
 </html>

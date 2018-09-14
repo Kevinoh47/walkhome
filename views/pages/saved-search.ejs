@@ -4,7 +4,7 @@
   <body>
     <%- include('../partials/header') %>
       <ul>
-
+        <li id="localStorageEmail" class="hide-me"></li>
         <li>WalkScore: <%= search[5] %> </li>
         <li>WalkScore Explanation: <%= search[6] %> </li>
         <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
@@ -23,5 +23,13 @@
         <a id='return-to-address-search' href='/address'>Return to Address Search</a>
       </p>
     <%- include('../partials/footer') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(function() {
+        const myEmail = localStorage.getItem('user_email');
+        $('#localStorageEmail').text(myEmail);
+        console.log($('#localStorageEmail'));
+      });
+    </script>
   </body>
 </html>

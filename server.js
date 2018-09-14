@@ -69,7 +69,7 @@ function checkUser(request, response) {
         let myUser = result.rows[0].id;
         if (!first) { first = result.rows[0].first_name; }
         if (myUser > 0) {
-          return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
+          return response.render('pages/login-message', {email: email, login_required: false, message: `Welcome back ${first}!`});
         }
       }
       else {
@@ -87,7 +87,7 @@ function addUser (request, response) {
   let values = [email, first, last, phone];
   client.query(sql, values)
     .then(result => {
-      response.render('pages/login-message', {login_required: email, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
+      response.render('pages/login-message', {email: email, login_required: true, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
     })
     .catch(err => {
       console.error(err);
@@ -96,7 +96,10 @@ function addUser (request, response) {
 }
 
 function showSavedSearches (request, response) {
-  let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
+  let {localStorageEmail} = request.body;
+  const userId = getUserIdByEmail(localStorageEmail);
+
+  const sql = `SELECT a.address, a.zip, a.city, a.state, a.neighborhood, a.walkscore, a.ws_explanation, a.ws_link FROM address_search a JOIN saved_search b ON a.id = b.address_search_id WHERE b.user_id = ${userId} order by id DESC;`;
 
   client.query(sql)
     .then(results => {
@@ -104,30 +107,66 @@ function showSavedSearches (request, response) {
       response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
     });
 }
-function saveSearch(request, response) {
-  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link} = request.body;
-  let sql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-  let values = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link];
 
-  client.query(sql, values)
-    // .then(
-    //   getIdFromAddressSearchTable(request,response)
-    // )
+function getUserIdByEmail(localStorageEmail) {
+  let sql = `SELECT id FROM walkhome_user WHERE email = ${localStorageEmail};`;
+  client.query(sql)
+    .then(results =>
+    {
+      return results;
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+function getAddressSearchIdByGuid(myGuid) {
+  let sql = `SELECT id FROM address_search WHERE search_guid = ${myGuid};`;
+  client.query(sql)
+    .then(results =>
+    {
+      return results;
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+}
+// source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#2117523
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+function saveSearch(request, response) {
+  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, localStorageEmail} = request.body;
+
+  const myGuid = uuidv4();
+  const searchSql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, search_guid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+  const searchValues = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, myGuid];
+
+  client.query(searchSql, searchValues)
     .then(results => {
       console.log({results});
-      response.render('pages/saved-search', {search : values, message: 'you saved a search!'});
+      const addressSearchId = getAddressSearchIdByGuid(myGuid);
+      const userId = getUserIdByEmail(localStorageEmail);
+      const linkValues = [userId, addressSearchId];
+      const linkSql = `INSERT INTO saved_search(user_id, address_search_id) VALUES($1, $2);`;
+      client.query(linkSql, linkValues)
+        .catch(err => {
+          console.error(err);
+          response.status(500).send(err);
+        });
+    })
+    .then(results => {
+      console.log({results});
+      response.render('pages/saved-search', {search : searchValues, message: 'you saved a search!'});
     })
     .catch(err => {
       console.error(err);
       response.status(500).send(err);
     });
 }
-
-// function getIdFromAddressSearchTable(request,response) {
-//   let {address, zip, city, state, neighborhood} = request.body;
-//   let sql = `SELECT id FROM address_search WHERE address = $1 AND zip = $2 AND city = $3 AND state = $4 and neighborhood =$5;`;
-//   let values = [address, zip, city, state, neighborhood];
-// }
 
 function getAddressData(request, response) {
   let myNeighborhood = [];
