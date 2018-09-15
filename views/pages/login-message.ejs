@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html>
+  <div id="background">
   <%-include('../partials/head') %>
   <body>
-    <%- include('../partials/header') %>
-    <div id="page-header">
-      <h2>Login Status</h2>
-    </div>
-    <div id="address">
-      <p>
-        <% if (message) { %>
-        <strong><em><%= message %></em></strong>
-        <% } %>
-        <% if (login_required) { %>
-          <form id="login" action="/login" method="post">
-            <p>
-              <input class="hide-me" type="text" name="email" value= <%= login_required %> >
+      <%- include('../partials/header') %>
+      <div id="page-header">
+        <h2>Login Status</h2>
+      </div>
+      <div id="address">
+        <p>
+          <% if (message) { %>
+            <strong><em><%= message %></em></strong>
+            <% } %>
+            <% if (login_required) { %>
+              <form id="login" action="/login" method="post">
+                <p>
+                  <input class="hide-me" type="text" name="email" value= <%= login_required %> >
+                </p>
+                <p>
+                  <button id="submit" class="show-me" name="submit_button" type="submit">Login</button>
+                </p>
+              </form> 
+              <% } %>
             </p>
-            <p>
-              <button id="submit" class="show-me" name="submit_button" type="submit">Login</button>
-            </p>
-          </form> 
-        <% } %>
-      </p>
-    </div>
-    <%- include('../partials/footer') %>
-  </body>
+          </div>
+          <%- include('../partials/footer') %>
+        </body>
+      </div>
 </html>
