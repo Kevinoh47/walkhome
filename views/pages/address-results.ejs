@@ -1,73 +1,68 @@
 <!DOCTYPE html>
 <html>
+  <div id="background">
   <%-include('../partials/head') %>
   <body>
-    <%- include('../partials/header') %>
-    <main>
-      <h3 class="search-results-head">Address Info</h3>
-       <ul class="search-results">
-        <li data-address-id="<%= walkScoreInfo[0].address %>"> 
-          <div class="property-container">
-            <section>
-              <% if (walkScoreInfo[0].address) { %>
-              <p class="streetAddress"> Street Address: <br> <%= walkScoreInfo[0].address %></p>
-              <% } %>
-              <% if (walkScoreInfo[0].city) { %>
-              <p class="city"> City: <%= walkScoreInfo[0].city %></p>
-              <% } %>
-              <% if (walkScoreInfo[0].state) { %>
-              <p class="state"> State: <%= walkScoreInfo[0].state %></p>
-              <% } %>
-              <% if (walkScoreInfo[0].zip) { %>
-              <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
-              <% } %>
-              <% if(neighborhood !=='Unknown') { %>
-              <a class="neighborhood" href="https://www.walkscore.com/<%= (walkScoreInfo[0].state).toUpperCase() %>/<%= walkScoreInfo[0].city %>/<%= neighborhood %>">Neighborhood: <%= neighborhood %></a>
-              <% } %>
-              <h4 id=walkhome-results>Walkhome Results</h4>
-              <span id=latLong>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
-              <p class="walk-score-rating"> WalkScore Rating: <%= walkScoreInfo[1].walkscore %></p>
-              <p class="walk-score-desc">WalkScore Description: <br> <%= walkScoreInfo[1].description %></p>
-              <img src="<%= walkScoreInfo[1].logo_url %>"/>
-              <img src="<%= walkScoreInfo[1].more_info_icon %>"/>
-              <span>
-                  <br><a href="<%= walkScoreInfo[1].more_info_link %>"> More Info </a><br>
-                  <a href="<%= walkScoreInfo[1].ws_link %>"> Address WalkScore Details </a><br>
-              </span>
-            </section>
-          </div>
-          <form id="save-search" action="/save-search" method="post">
 
-            <p id="appendToMe" class = "hide-me"></p>
+
+      <%- include('../partials/header') %>
+      <main>
+        
+        <h3 class="search-results-head">Address Info</h3>
+        
+        <ul class="search-results">
           
-            <input class = "hide-me" type="text" name="address" value="<%= walkScoreInfo[0].address %>">
-            <input class = "hide-me" type="text" name="city" value="<%= walkScoreInfo[0].city %>">
-            <input class = "hide-me" type="text" name="state" value="<%= walkScoreInfo[0].state %>">
-            <input class = "hide-me" type="text" name="zip" value="<%= walkScoreInfo[0].zip %>">
-            <input class = "hide-me" type="text" name="neighborhood" value="<%=neighborhood %>">
+          <li data-address-id="<%= walkScoreInfo[0].address %>"> 
+            <div class="property-container">
+              <section>
+                <% if (walkScoreInfo[0].address) { %>
+                  <p class="streetAddress"> Street Address: <br> <%= walkScoreInfo[0].address %></p>
+                  <% } %>
+                  <% if (walkScoreInfo[0].city) { %>
+                    <p class="city"> City: <%= walkScoreInfo[0].city %></p>
+                    <% } %>
+                    <% if (walkScoreInfo[0].state) { %>
+                      <p class="state"> State: <%= walkScoreInfo[0].state %></p>
+                      <% } %>
+                      <% if (walkScoreInfo[0].zip) { %>
+                        <p class="zip"> Zip Code: <%= walkScoreInfo[0].zip %></p>
+                        <% } %>
+                        <% if(neighborhood !=='Unknown') { %>
+                          <a class="neighborhood" href="https://www.walkscore.com/<%= (walkScoreInfo[0].state).toUpperCase() %>/<%= walkScoreInfo[0].city %>/<%= neighborhood %>">Neighborhood: <%= neighborhood %></a>
+                          <% } %>
+                          <h4 id=walkhome-results>Walkhome Results</h4>
+                          <span id=latLong>lat: <%= walkScoreInfo[1].snapped_lat %> lon: <%= walkScoreInfo[1].snapped_lon %></span>
+                          <p class="walk-score-rating"> WalkScore Rating: <%= walkScoreInfo[1].walkscore %></p>
+                          <p class="walk-score-desc">WalkScore Description: <br> <%= walkScoreInfo[1].description %></p>
+                          <img src="<%= walkScoreInfo[1].logo_url %>"/>
+                          <img src="<%= walkScoreInfo[1].more_info_icon %>"/>
+                          <span>
+                            <br><a href="<%= walkScoreInfo[1].more_info_link %>"> More Info </a><br>
+                            <a href="<%= walkScoreInfo[1].ws_link %>"> Address WalkScore Details </a><br>
+                          </span>
+                        </section>
+                      </div>
+                      <form id="save-search" action="/save-search" method="post">
+                        <input class = "hide-me" type="text" name="address" value="<%= walkScoreInfo[0].address %>">
+                        <input class = "hide-me" type="text" name="city" value="<%= walkScoreInfo[0].city %>">
+                        <input class = "hide-me" type="text" name="state" value="<%= walkScoreInfo[0].state %>">
+                        <input class = "hide-me" type="text" name="zip" value="<%= walkScoreInfo[0].zip %>">
+                        <input class = "hide-me" type="text" name="neighborhood" value="<%=neighborhood %>">
+                        
+                        <input class = "hide-me" type="integer" name="walkscore" value="<%= walkScoreInfo[1].walkscore %>">
+                        <input class = "hide-me" type="text" name="ws_explanation" value="<%= walkScoreInfo[1].description %>">
+                        <input class = "hide-me" type="text" name="ws_link" value="<%=walkScoreInfo[1].ws_link %>">
+                        
+                        
+                        <button class="show-me" type="submit">Save Search</button> 
+                        <br>
+                      </form>
+                    </li>
+                    
+                  </ul>
+                </main>
+                <%- include('../partials/footer') %>
+              </body>
+            </div>
+              </html>
 
-            <input class = "hide-me" type="integer" name="walkscore" value="<%= walkScoreInfo[1].walkscore %>">
-            <input class = "hide-me" type="text" name="ws_explanation" value="<%= walkScoreInfo[1].description %>">
-            <input class = "hide-me" type="text" name="ws_link" value="<%=walkScoreInfo[1].ws_link %>">
-
-
-            <button class="show-me" type="submit">Save Search</button> 
-            <br>
-          </form>
-        </li>
-
-      </ul>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script>
-        (function() {
-          const myEmail = localStorage.getItem('user_email');
-          const userId = localStorage.getItem('userId');
-          let newInput = `<input class = "hide-me" type="text" id="localStorageEmail" name="localStorageEmail" value="${myEmail}" ><br/>
-          <input class = "hide-me" type="text" id="UserId" name="userId" value="${userId}" >`;
-          $('#appendToMe').append(newInput);
-        }());
-      </script>
-    </main>
-    <%- include('../partials/footer') %>
-  </body>
-</html>

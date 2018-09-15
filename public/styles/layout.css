@@ -3,12 +3,18 @@ body {
   line-height: 1.5;
   font-size: 100%;
   color: whitesmoke;
+  text-align: center; 
   background-color: darkblue;
+}
+.hero-nav{
+  background-color: rgba(255, 255, 255, 0.699);
+}
+#background {
   background-image: url('../IMG/seattle_skyline_with_mount_rainier_2014_by_larrygorlin-d86vi3u.jpg');
+  background-color: darkblue;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  text-align: center; 
 }
 
 #address-header {
@@ -51,7 +57,7 @@ nav {
   width: 100%;
   text-align: center;
   color: whitesmoke;
-  background-color: transparent;
+  background-color: darkblue;
   font-family: 'Pacifico', cursive;
 }
 
@@ -197,6 +203,24 @@ height: 25%;
   padding: 25px;
 }
 
+#error {
+  max-width: 940px;
+  margin: 0px auto 10px auto;
+  padding: 20px;
+  background-color: grey;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+
+
 /*setting to ignore base page settings for landing page */
 /* .ignore-base{all:unset;} */
 
@@ -209,4 +233,28 @@ height: 25%;
   height: 100%;
   z-index: 0S;
 }
+
+/* settings for ghost style button on hero / landing page to bring us to our app */
+
+.ghost-button{
+  display: inline-block;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
+
+.ghost-button:visited {
+  color: #fff;
+}
+
+.ghost-button:hover,
+.ghost-button:active {
+  background-color: #fff;
+  color: #000;
+}
+
 
