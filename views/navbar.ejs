@@ -1,0 +1,26 @@
+<!-- views/partials/header.ejs -->
+<header id="top-head" class="clearfix">
+  <section class="heading-group-h1">
+    <div id=logo>
+      walkhome
+  </div>
+  </section>
+
+  <div id="leftSidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">HOME</a>
+    <a href="#">ABOUT</a>
+    <a href="#">LOGIN</a>
+    <a href="#">SEARCH</a>
+    <a href="#">SAVED SEARCHES</a>
+  </div>
+  <script>
+    function openNav() {
+        document.getElementById("leftSidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+        document.getElementById("leftSidenav").style.width = "0";
+    }
+    </script>
+</header>
