@@ -8,7 +8,6 @@ last_name varchar(255),
 phone_number integer
 );
 
-// todo unique constraint across searchable fields
 CREATE TABLE address_search (
   id SERIAL PRIMARY KEY,
   address VARCHAR(255),

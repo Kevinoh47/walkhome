@@ -42,7 +42,6 @@ body {
   padding: 25px;
 }
 
-
 nav {
   padding: 0.1em;
 }
@@ -55,6 +54,7 @@ nav {
   background-color: transparent;
   font-family: 'Pacifico', cursive;
 }
+
 .fill{
 display: inline-flex;
 justify-content: center;
@@ -87,6 +87,7 @@ height: 25%;
   width: 300px;
   padding: 25px;
 }
+
 .search-results{
   line-height: 2;
   max-width: 940px;
@@ -137,6 +138,21 @@ height: 25%;
   align-content: center;
 }
 
+#savedSearch-head{
+  max-width: 940px;
+  margin: 10px auto 0px auto;
+  padding: 20px;
+  background-color: darkblue;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+
 #savedSearch{
   max-width: 940px;
   margin: 0px auto 10px auto;
@@ -151,3 +167,46 @@ height: 25%;
   width: 300px;
   padding: 25px;
 }
+#page-header{
+  max-width: 940px;
+  margin: 10px auto 0px auto;
+  padding: 20px;
+  background-color: darkblue;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+
+#page{
+  max-width: 940px;
+  margin: 0px auto 10px auto;
+  padding: 20px;
+  background-color: grey;
+  opacity: 0.95;
+  font-family: 'Noto Serif KR', sans-serif;
+  text-align: center;
+  color: whitesmoke;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 300px;
+  padding: 25px;
+}
+
+/*setting to ignore base page settings for landing page */
+/* .ignore-base{all:unset;} */
+
+/* this is the gray box on hero page for content */
+.overlay-box {
+  background-color: rgba(26, 23, 23, 0.781);
+  color: white;
+  width: 60%;
+  margin: auto;
+  height: 100%;
+  z-index: 0S;
+}
+
