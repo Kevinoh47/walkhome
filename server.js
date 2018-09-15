@@ -6,14 +6,14 @@ const pg = require('pg');
 
 const superagent = require('superagent');
 
-const NodeGeocoder = require('node-geocoder');
+const nodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'google',
   httpAdapter: 'https',
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
   formatter: null
 };
-const geocoder = NodeGeocoder(options);
+const geocoder = nodeGeocoder(options);
 
 const urlencode = require('urlencode');
 const walkscoreApiKey = process.env.WALKSCORE_API_KEY;
@@ -104,9 +104,7 @@ function addUser (request, response) {
 }
 
 function showSavedSearches (request, response) {
-
-  let {userId} = request.body;
-
+  const {userId} = request.body;
   const sql = `SELECT a.address, a.zip, a.city, a.state, a.neighborhood, a.walkscore, a.ws_explanation, a.ws_link FROM address_search a JOIN saved_search b ON a.id = b.address_search_id WHERE b.user_id = ${userId} order by id DESC;`;
 
   client.query(sql)
@@ -139,7 +137,7 @@ function uuidv4() {
 }
 
 function saveSearch(request, response) {
-  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
+  const {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
 
   const myGuid = uuidv4();
 
