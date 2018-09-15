@@ -3,34 +3,41 @@
   <div id="background" >
   <%-include('../partials/head') %>
   <body>
-
-      <%- include('../partials/header') %>
-      <p>
-        <strong><em><%= message %></em></strong>
-      </p>
-      <ul>
-        <h3 id="savedSearch-head">Saved Search</h3>
-        <div id="savedSearch">
-          <% searches.forEach((search) => { %>
-            <li>WalkScore: <%= search.walkscore %> </li>
-            <li>WalkScore Explanation: <%= search.ws_explanation %> </li>
-            <li><strong><a href= <%= search.ws_link %>>WalkScore Details</a></strong></li>
-            <% if(search.address) { %>
-              <li>Address: <%= search.address %></li>
-              <% } %>
-              <li>City: <%= search.city %></li>
-              <% if(search.zip) { %>
-                <li>Zip: <%= search.zip %></li>
-                <% } %>
-                <br>
-                <% } )%>
-              </ul>
-              <p>
-                <a id='return-to-address-search' href='/address'>Return to Address Search</a>
-              </p>
-            </div>
-            <%- include('../partials/footer') %>
-          </body>
-        </div>
-
+    <%- include('../partials/header') %>
+    <p id="localStorageEmail" name="localStorageEmail" class="hide-me"></p>
+    <p id="appendToMe" class = "hide-me"></p>
+    <p><strong><em><%= message %></em></strong></p>
+    <ul>
+      <h3 id="savedSearch-head">Saved Search</h3>
+      <div id="savedSearch">
+      <% searches.forEach((search) => { %>
+      <li>WalkScore: <%= search.walkscore %> </li>
+      <li>WalkScore Explanation: <%= search.ws_explanation %> </li>
+      <li><strong><a href= <%= search.ws_link %>>WalkScore Details</a></strong></li>
+      <% if(search.address) { %>
+      <li>Address: <%= search.address %></li>
+      <% } %>
+      <li>City: <%= search.city %></li>
+      <% if(search.zip) { %>
+        <li>Zip: <%= search.zip %></li>
+      <% } %>
+      <br>
+      <% } )%>
+    </ul>
+    <p>
+      <a id='return-to-address-search' href='/address'>Return to Address Search</a>
+    </p>
+  </div>
+    <%- include('../partials/footer') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        (function() {
+          const myEmail = localStorage.getItem('user_email');
+          const userId = localStorage.getItem('userId');
+          let newInput = `<input class = "hide-me" type="text" id="localStorageEmail" name="localStorageEmail" value="${myEmail}" ><br/>
+          <input class = "hide-me" type="text" id="UserId" name="userId" value="${userId}" >`;
+          $('#appendToMe').append(newInput);
+        }());
+      </script>
+  </body>
 </html>

@@ -104,7 +104,7 @@ function addUser (request, response) {
 }
 
 function showSavedSearches (request, response) {
-  const {userId} = request.body;
+  let {userId} = request.body;
   const sql = `SELECT a.address, a.zip, a.city, a.state, a.neighborhood, a.walkscore, a.ws_explanation, a.ws_link FROM address_search a JOIN saved_search b ON a.id = b.address_search_id WHERE b.user_id = ${userId} order by id DESC;`;
 
   client.query(sql)
@@ -137,7 +137,7 @@ function uuidv4() {
 }
 
 function saveSearch(request, response) {
-  const {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
+  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
 
   const myGuid = uuidv4();
 
