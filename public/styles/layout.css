@@ -196,3 +196,13 @@ height: 25%;
   width: 300px;
   padding: 25px;
 }
+
+/* this is the gray box on hero page for content */
+.overlay-box {
+  background-color: rgba(26, 23, 23, 0.781);
+  color: white;
+  width: 60%;
+  margin: auto;
+  height: 100%;
+  z-index: 0S;
+}
