@@ -62,3 +62,32 @@ a:hover, a:focus {
     display: block;
   }
 }
+
+.hero-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1000px;
+  min-height: 105px;
+  background-image: url(../IMG/hero.jpg);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-nav-inner {
+  z-index: 2;
+}
+
+.hero-nav h1 {
+  color: #efefef;
+  font-family: 'Pacifico', cursive;
+  text-shadow: 2px 2px rgba(190, 190, 190, 0.85);
+  font-size: 5em;
+}
