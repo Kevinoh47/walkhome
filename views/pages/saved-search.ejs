@@ -4,26 +4,25 @@
   <body>
     <%- include('../partials/header') %>
     <h3 id="savedSearch-head">Saved Searches</h3>
-      <div id="savedSearch"> 
-        <ul>
+        <ul id="savedSearch">
 
-        <li>WalkScore: <%= search[5] %> </li>
-        <li>WalkScore Explanation: <%= search[6] %> </li>
-        <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
-        <% if(search[0]) { %>
+         <li>WalkScore: <%= search[5] %> </li>
+         <li>WalkScore Explanation: <%= search[6] %> </li>
+         <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
+          <% if(search[0]) { %>
           <li>Address: <%= search[0] %></li>
           <% } %>
           <li>City: <%= search[2] %></li>
           <% if(search[1]) { %>
             <li>Zip: <%= search[1] %></li>
             <% } %>
-          </ul>
-        <p>
-          <strong><em><%= message %></em></strong>
-        </p>
-        <p>
-          <a id='return-to-address-search' href='/address'>Return to Address Search</a> 
-        </p>
+            <p>
+              <strong><em><%= message %></em></strong>
+            </p>
+            <p>
+              <a id='return-to-address-search' href='/address'>Return to Address Search</a> 
+            </p>
+         </ul>
       </div>
     <%- include('../partials/footer') %>
   </body>
