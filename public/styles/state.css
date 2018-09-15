@@ -106,30 +106,34 @@ a:hover, a:focus {
 
 .hero-nav.fixme:before {
   /* color that hero banner will transition into */
-  background: rgba(219, 216, 233, 0.274);
+  background: rgba(0, 0, 0, 0.493);
 }
 
 /* Settings for parallax scrolling elements */
 .parallax {
   /*the url is the image for the first parallax w/ overlay box in it*/
-  background-image: url(../IMG/seattle_house.jpg);
+  background-image: url(../IMG/pikes.jpg);
   text-align: center;
   min-height: 850px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  margin:0;
+  padding:0;
 }
 
 .small-parallax {
   /*this image is for the short parallax for message area */
   background-image: url(../IMG/traffic.jpg);
   color: white;
-  min-height: 250px;
+  min-height: 180px;
   align-self: center;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
