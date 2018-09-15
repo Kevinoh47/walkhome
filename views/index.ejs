@@ -8,4 +8,25 @@
   <footer>
     <%- include('partials/footer') %>
   </footer>
+  <script
+ src="https://code.jquery.com/jquery-3.3.1.min.js"
+ integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+ crossorigin="anonymous"></script>
+ <script>var heroShinker = function() {
+     var hero = $('.hero-nav'),
+         heroHeight = $('.hero-nav').outerHeight(true);
+         $(hero).parent().css('padding-top', heroHeight);
+     $(window).scroll(function() {
+         var scrollOffset = $(window).scrollTop();
+         if (scrollOffset < heroHeight) {
+             $(hero).css('height', (heroHeight - scrollOffset));
+         }
+         if (scrollOffset > (heroHeight - 215)) {
+             hero.addClass('fixme');
+         } else {
+             hero.removeClass('fixme');
+         };
+     });
+ }
+ heroShinker();</script>
 </html>
