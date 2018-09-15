@@ -38,6 +38,10 @@ app.set('view engine', 'ejs');
 // API routes
 app.get('/', (request, response) => { response.render('index');});
 
+app.get('/about', (request, response) => { response.render('pages/about');});
+
+app.get('/login', (request, response) => { response.render('pages/login');});
+
 app.get('/address', (request, response) => {
   response.render('pages/address');}
 );
