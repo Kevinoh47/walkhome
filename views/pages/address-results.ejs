@@ -4,11 +4,8 @@
   <body>
     <%- include('../partials/header') %>
     <main>
-    
       <h3 class="search-results-head">Address Info</h3>
-      
        <ul class="search-results">
-
         <li data-address-id="<%= walkScoreInfo[0].address %>"> 
           <div class="property-container">
             <section>
@@ -40,6 +37,9 @@
             </section>
           </div>
           <form id="save-search" action="/save-search" method="post">
+
+            <p id="appendToMe" class = "hide-me"></p>
+          
             <input class = "hide-me" type="text" name="address" value="<%= walkScoreInfo[0].address %>">
             <input class = "hide-me" type="text" name="city" value="<%= walkScoreInfo[0].city %>">
             <input class = "hide-me" type="text" name="state" value="<%= walkScoreInfo[0].state %>">
@@ -57,6 +57,16 @@
         </li>
 
       </ul>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+        (function() {
+          const myEmail = localStorage.getItem('user_email');
+          const userId = localStorage.getItem('userId');
+          let newInput = `<input class = "hide-me" type="text" id="localStorageEmail" name="localStorageEmail" value="${myEmail}" ><br/>
+          <input class = "hide-me" type="text" id="UserId" name="userId" value="${userId}" >`;
+          $('#appendToMe').append(newInput);
+        }());
+      </script>
     </main>
     <%- include('../partials/footer') %>
   </body>

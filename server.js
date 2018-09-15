@@ -38,18 +38,21 @@ app.set('view engine', 'ejs');
 // API routes
 app.get('/', (request, response) => { response.render('index');});
 
-app.get('/address', (request, response) => {response.render('pages/address');});
+app.get('/address', (request, response) => {
+  response.render('pages/address');}
+);
 app.post('/address', getAddressData);
-
-
-app.post('/save-search', saveSearch);
-//app.get(/save-search, showSavedSearches) // todo: show all the saved searches (by user)
 
 // save a search
 app.post('/save-search', saveSearch);
 
-// retrieve saved searches
-app.get('/saved-searches', showSavedSearches); // todo: filter by user.
+// get saved searches landing page (landing page necessary to get userId)
+app.get('/saved-searches', function(request, response) {
+  response.render('pages/saved-search-intermediate');
+});
+
+// request saved searches.
+app.post('/saved-searches', showSavedSearches);
 
 // add a user
 app.post('/login', checkUser);
@@ -69,11 +72,11 @@ function checkUser(request, response) {
   let sql = `SELECT id, first_name FROM walkhome_user WHERE email = $1;`;
   client.query(sql,values)
     .then(result => {
-      if (result.rows[0] && result.rows[0].id){
-        let myUser = result.rows[0].id;
+      if (result.rows[0] && result.rows[0].id) {
+        let userId = result.rows[0].id;
         if (!first) { first = result.rows[0].first_name; }
-        if (myUser > 0) {
-          return response.render('pages/login-message', {login_required: false, message: `Welcome back ${first}!`});
+        if (userId > 0) {
+          return response.render('pages/login-message', {email: email, userId: userId, login_required: false, message: `Welcome back ${first}!`});
         }
       }
       else {
@@ -85,13 +88,14 @@ function checkUser(request, response) {
       response.status(500).send(err);
     });
 }
+
 function addUser (request, response) {
   let {email, first, last, phone} = request.body;
   let sql = `INSERT INTO walkhome_user(email, first_name, last_name, phone_number) VALUES( $1, $2, $3, $4);`;
   let values = [email, first, last, phone];
   client.query(sql, values)
     .then(result => {
-      response.render('pages/login-message', {login_required: email, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
+      response.render('pages/login-message', {email: email, userId: 0, login_required: true, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
     })
     .catch(err => {
       console.error(err);
@@ -100,7 +104,10 @@ function addUser (request, response) {
 }
 
 function showSavedSearches (request, response) {
-  let sql = `SELECT address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link FROM address_search order by id DESC;`;
+
+  let {userId} = request.body;
+
+  const sql = `SELECT a.address, a.zip, a.city, a.state, a.neighborhood, a.walkscore, a.ws_explanation, a.ws_link FROM address_search a JOIN saved_search b ON a.id = b.address_search_id WHERE b.user_id = ${userId} order by id DESC;`;
 
   client.query(sql)
     .then(results => {
@@ -108,14 +115,52 @@ function showSavedSearches (request, response) {
     });
 }
 
-function saveSearch(request, response) {
-  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link} = request.body;
-  let sql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-  let values = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link];
+function getAddressSearchIdByGuid(myGuid) {
+  let castedGuid = myGuid.toString();
+  let sql = `SELECT id FROM address_search WHERE search_guid = $1`;
+  let values = [castedGuid];
 
-  client.query(sql, values)
+  return client.query(sql, values)
+    .then(results =>
+    {
+      return results;
+    })
+    .catch(err => {
+      console.error({err});
+    });
+
+}
+// source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function saveSearch(request, response) {
+  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
+
+  const myGuid = uuidv4();
+
+  const searchSql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, search_guid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+  const searchValues = [address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, myGuid];
+
+  client.query(searchSql, searchValues)
     .then(results => {
-      response.render('pages/saved-search', {search : values, message: 'you saved a search!'});
+      getAddressSearchIdByGuid(myGuid)
+        .then(result => {
+          const addressSearchId = result.rows[0].id;
+          const linkValues = [userId, addressSearchId];
+          const linkSql = `INSERT INTO saved_search(user_id, address_search_id) VALUES($1, $2);`;
+          client.query(linkSql, linkValues);
+        })
+        .catch(err => {
+          console.error({err});
+        });
+    })
+    .then(results => {
+      response.render('pages/saved-search', {search : searchValues, message: 'you saved a search!'});
     })
     .catch(err => {
       console.error(err);
@@ -126,6 +171,7 @@ function saveSearch(request, response) {
 function getAddressData(request, response) {
   let myNeighborhood = [];
   let hoodStr = 'Unknown';
+
   getNeighborhood(request, response)
     .then(results => {
       myNeighborhood = results.body.results[0].address_components.filter(obj => {
@@ -135,13 +181,13 @@ function getAddressData(request, response) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });
-
   getGeocodedData(request, response)
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
     .then(addressArr => {
       response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
     });
+
 }
 
 // Helper functions
