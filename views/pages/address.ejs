@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
   <%-include('../partials/head') %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <body>
     <%- include('../partials/header') %>
     <div id="address-header">
       <h2>Address Search</h2>
     </div>
-
-    <!-- <div id="page"> -->
     <div id="address">
-      <p id="localStorageEmail" name="localStorageEmail" class="hide-me"></p>
       <form id="find-address-info" action="/address" method="post" novalidate>
         <p>
           <label>Street Address</label><br>
@@ -33,15 +31,5 @@
       </form> 
     </div>
     <%- include('../partials/footer') %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-      $(function() {
-        const myEmail = localStorage.getItem('user_email');
-        $('#localStorageEmail').text(myEmail);
-        console.log('myEmail', myEmail);
-        console.log($('#localStorageEmail'));
-        console.log('localStorageEmail dot text()', $('#localStorageEmail').text());
-      });
-    </script>
   </body>
 </html>

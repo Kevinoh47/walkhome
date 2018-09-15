@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <%-include('../partials/head') %>
+  <body>
+    <%- include('../partials/header') %>
+    <main>
+      <h3 class="search-results-head">Show My Saved Searches</h3>
+
+      <form id="save-search" action="/saved-searches" method="post">
+        <p id="appendToMe" class = "hide-me"></p>
+
+        <button class="show-me" type="submit">Show Saved Searches</button> 
+      </form>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+        (function() {
+          const myEmail = localStorage.getItem('user_email');
+          const userId = localStorage.getItem('userId');
+          let newInput = `<input class = "hide-me" type="text" id="localStorageEmail" name="localStorageEmail" value="${myEmail}" ><br/>
+          <input class = "hide-me" type="text" id="UserId" name="userId" value="${userId}" >`;
+          $('#appendToMe').append(newInput);
+        }());
+      </script>
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

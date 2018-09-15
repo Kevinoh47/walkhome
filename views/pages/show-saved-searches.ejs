@@ -4,9 +4,8 @@
   <body>
     <%- include('../partials/header') %>
     <p id="localStorageEmail" name="localStorageEmail" class="hide-me"></p>
-    <p>
-      <strong><em><%= message %></em></strong>
-    </p>
+    <p id="appendToMe" class = "hide-me"></p>
+    <p><strong><em><%= message %></em></strong></p>
     <ul>
       <% searches.forEach((search) => { %>
       <li>WalkScore: <%= search.walkscore %> </li>
@@ -28,11 +27,13 @@
     <%- include('../partials/footer') %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-      $(function() {
-        const myEmail = localStorage.getItem('user_email');
-        $('#localStorageEmail').text(myEmail);
-        console.log($('#localStorageEmail'));
-      });
-    </script>
+        (function() {
+          const myEmail = localStorage.getItem('user_email');
+          const userId = localStorage.getItem('userId');
+          let newInput = `<input class = "hide-me" type="text" id="localStorageEmail" name="localStorageEmail" value="${myEmail}" ><br/>
+          <input class = "hide-me" type="text" id="UserId" name="userId" value="${userId}" >`;
+          $('#appendToMe').append(newInput);
+        }());
+      </script>
   </body>
 </html>

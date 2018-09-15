@@ -38,18 +38,21 @@ app.set('view engine', 'ejs');
 // API routes
 app.get('/', (request, response) => { response.render('index');});
 
-app.get('/address', (request, response) => {response.render('pages/address');});
+app.get('/address', (request, response) => {
+  response.render('pages/address');}
+);
 app.post('/address', getAddressData);
-
-
-app.post('/save-search', saveSearch);
-//app.get(/save-search, showSavedSearches) // todo: show all the saved searches (by user)
 
 // save a search
 app.post('/save-search', saveSearch);
 
-// retrieve saved searches
-app.get('/saved-searches', showSavedSearches);
+// get saved searches landing page (landing page necessary to get userId)
+app.get('/saved-searches', function(request, response) {
+  response.render('pages/saved-search-intermediate');
+});
+
+// request saved searches.
+app.post('/saved-searches', showSavedSearches);
 
 // add a user
 app.post('/login', checkUser);
@@ -69,11 +72,11 @@ function checkUser(request, response) {
   let sql = `SELECT id, first_name FROM walkhome_user WHERE email = $1;`;
   client.query(sql,values)
     .then(result => {
-      if (result.rows[0] && result.rows[0].id){
-        let myUser = result.rows[0].id;
+      if (result.rows[0] && result.rows[0].id) {
+        let userId = result.rows[0].id;
         if (!first) { first = result.rows[0].first_name; }
-        if (myUser > 0) {
-          return response.render('pages/login-message', {email: email, login_required: false, message: `Welcome back ${first}!`});
+        if (userId > 0) {
+          return response.render('pages/login-message', {email: email, userId: userId, login_required: false, message: `Welcome back ${first}!`});
         }
       }
       else {
@@ -92,7 +95,7 @@ function addUser (request, response) {
   let values = [email, first, last, phone];
   client.query(sql, values)
     .then(result => {
-      response.render('pages/login-message', {email: email, login_required: true, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
+      response.render('pages/login-message', {email: email, userId: 0, login_required: true, message: `Welcome, ${first}, you are now a Walkhome member! Please click to login.`});
     })
     .catch(err => {
       console.error(err);
@@ -101,41 +104,25 @@ function addUser (request, response) {
 }
 
 function showSavedSearches (request, response) {
-  let {localStorageEmail} = request.body;
-  const userId = getUserIdByEmail(localStorageEmail);
+
+  let {userId} = request.body;
 
   const sql = `SELECT a.address, a.zip, a.city, a.state, a.neighborhood, a.walkscore, a.ws_explanation, a.ws_link FROM address_search a JOIN saved_search b ON a.id = b.address_search_id WHERE b.user_id = ${userId} order by id DESC;`;
 
   client.query(sql)
     .then(results => {
-      console.log({results});
       response.render('pages/show-saved-searches', {searches : results.rows, message: 'Here are your saved searches.'});
-    });
-}
-
-function getUserIdByEmail(localStorageEmail) {
-  console.log('inside getUserIdByEmail localStorageEmail', localStorageEmail);
-  let sql = `SELECT id FROM walkhome_user WHERE email = ${localStorageEmail};`;
-  return client.query(sql)
-    .then(results =>
-    {
-      return results;
-    })
-    .catch(err => {
-      console.error(err);
     });
 }
 
 function getAddressSearchIdByGuid(myGuid) {
   let castedGuid = myGuid.toString();
-  console.log({castedGuid});
   let sql = `SELECT id FROM address_search WHERE search_guid = $1`;
   let values = [castedGuid];
-  console.log({sql}, {values});
+
   return client.query(sql, values)
     .then(results =>
     {
-      console.log('LINE 132 getAddressSearchIdByGuid results', results);
       return results;
     })
     .catch(err => {
@@ -152,10 +139,8 @@ function uuidv4() {
 }
 
 function saveSearch(request, response) {
-  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, localStorageEmail} = request.body;
-  console.log('LINE 150 saveSearch request', request);
-  console.log('LINE 151 saveSearch request.body', request.body);
-  console.log('LINE 152 localStorageEmail', localStorageEmail);
+  let {address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, userId} = request.body;
+
   const myGuid = uuidv4();
 
   const searchSql = `INSERT INTO address_search(address, zip, city, state, neighborhood, walkscore, ws_explanation, ws_link, search_guid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
@@ -163,14 +148,9 @@ function saveSearch(request, response) {
 
   client.query(searchSql, searchValues)
     .then(results => {
-      console.log('LINE 160 RESULTS', results);
       getAddressSearchIdByGuid(myGuid)
         .then(result => {
-          console.log('YAY result rows[0]dotid', result.rows[0].id);
           const addressSearchId = result.rows[0].id;
-          console.log('YAY addressSearchId', addressSearchId);
-          const userId = getUserIdByEmail(localStorageEmail);
-          console.log('YAY userId', userId);
           const linkValues = [userId, addressSearchId];
           const linkSql = `INSERT INTO saved_search(user_id, address_search_id) VALUES($1, $2);`;
           client.query(linkSql, linkValues);
@@ -180,7 +160,6 @@ function saveSearch(request, response) {
         });
     })
     .then(results => {
-      console.log('RIGHT BEFORE RENDERING SAVED SEARCH RESULTS PAGE', results);
       response.render('pages/saved-search', {search : searchValues, message: 'you saved a search!'});
     })
     .catch(err => {
@@ -192,6 +171,7 @@ function saveSearch(request, response) {
 function getAddressData(request, response) {
   let myNeighborhood = [];
   let hoodStr = 'Unknown';
+
   getNeighborhood(request, response)
     .then(results => {
       myNeighborhood = results.body.results[0].address_components.filter(obj => {
@@ -201,13 +181,13 @@ function getAddressData(request, response) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });
-
   getGeocodedData(request, response)
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
     .then(addressArr => {
       response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
     });
+
 }
 
 // Helper functions

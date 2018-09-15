@@ -8,6 +8,9 @@
     </div>
     <div>
       <p id="localStorageEmail" class="hide-me"><%= email %></p>
+      <% if (userId) { %> 
+      <p id="userId" class="hide-me"><%= userId %></p>
+      <% } %>
       <% if (message) { %>
       <strong><em><%= message %></em></strong>
       <% } %>
@@ -27,10 +30,10 @@
     <script>
       $(function() {
         const myEmail = $('#localStorageEmail').text();
-        console.log({myEmail});
+        const userId = $('#userId').text();
+        console.log({myEmail}, {userId});
         localStorage.setItem('user_email', myEmail);
-        // const retrievedVal = localStorage.getItem('user_email');
-        // console.log(retrievedVal);
+        localStorage.setItem('userId', userId);
       });
     </script>
   </body>
