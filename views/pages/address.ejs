@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html>
+  <div id="background">
   <%-include('../partials/head') %>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <body>
-    <%- include('../partials/header') %>
-    <div id="address-header">
-      <h2>Address Search</h2>
-    </div>
-    <div id="address">
-      <form id="find-address-info" action="/address" method="post" novalidate>
-        <p>
-          <label>Street Address</label><br>
-          <input id="textbox" type="text" name="address" required>
-        </p>
-        <p>
-          <label>Zip Code</label><br>
-          <input id="textbox" type="text" name="zip" required>
-        </p>
-        <p>
-          <label>City</label><br>
-          <input id="textbox" type="text" name="city" value="Seattle" required >
-        </p>
-        <p>
-          <label>State</label><br>
-          <input id="textbox" type="text" name="state" value="WA" required >
-        </p>
-        <p>
-          <button id="submit" name="submit_button" type="submit">Submit</button>
-        </p>
-      </form> 
-    </div>
-    <%- include('../partials/footer') %>
-  </body>
+      <%- include('../partials/header') %>
+      <%- include('../partials/navbar') %>
+      <div id="address-header">
+        <h2>Address Search</h2>
+      </div>
+      <div id="address">
+        <form id="find-address-info" action="/address" method="post" novalidate>
+          <p>
+            <label>Street Address</label><br>
+            
+            <input id="textbox" type="text" name="address" required>
+          </p>
+          <p>
+            <label>Zip Code</label><br>
+            <input id="textbox" type="text" name="zip" required>
+          </p>
+          <p>
+            <label>City</label><br>
+            
+            <input id="textbox" type="text" name="city" value="Seattle" required >
+          </p>
+          <p>
+            <label>State</label><br>
+            <input id="textbox" type="text" name="state" value="WA" required >
+            
+          </p>
+          <p>
+            <button id="submit" name="submit_button" type="submit">Submit</button>
+          </p>
+        </form> 
+      </div>
+      <%- include('../partials/footer') %>
+    </body>
+  </div>
 </html>

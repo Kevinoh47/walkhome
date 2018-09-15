@@ -3,6 +3,7 @@
   <%-include('../partials/head') %>
   <body>
     <%- include('../partials/header') %>
+    <%- include('../partials/navbar') %>
     <p id="localStorageEmail" name="localStorageEmail" class="hide-me"></p>
     <p id="appendToMe" class = "hide-me"></p>
     <p><strong><em><%= message %></em></strong></p>
@@ -22,10 +23,10 @@
       <% } %>
       <br>
       <% } )%>
+      <p>
+        <a id='return-to-address-search' href='/address'>Return to Address Search</a>
+      </p>
     </ul>
-    <p>
-      <a id='return-to-address-search' href='/address'>Return to Address Search</a>
-    </p>
   </div>
     <%- include('../partials/footer') %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

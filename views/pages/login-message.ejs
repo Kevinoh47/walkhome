@@ -3,6 +3,7 @@
   <%-include('../partials/head') %>
   <body>
     <%- include('../partials/header') %>
+    <%- include('../partials/navbar') %>
     <div id="page-header">
       <h2>Login Status</h2>
     </div>
@@ -13,6 +14,7 @@
       <% } %>
       <% if (message) { %>
       <strong><em><%= message %></em></strong>
+      <br><br>
       <% } %>
       <% if (login_required) { %>
         <form id="login" action="/login" method="post">
@@ -23,6 +25,8 @@
             <button class="show-me" name="submit_button" type="submit">Login</button>
           </p>
         </form> 
+      <% } else { %>
+        <a class="ghost-button" href="/address">Search</a>
       <% } %>
     </div>
     <%- include('../partials/footer') %>

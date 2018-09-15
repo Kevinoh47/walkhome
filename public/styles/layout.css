@@ -210,3 +210,43 @@ height: 25%;
   z-index: 0S;
 }
 
+.ghost-button{
+  display: inline-block;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
+.ghost-button:visited {
+  color: #fff;
+}
+.ghost-button:hover,
+.ghost-button:active {
+  background-color: #fff;
+  color: #000;
+}
+
+section img {
+  border-radius: 50%;
+  padding-top: 3em;
+ }
+ 
+ h1 {
+ font-size: 20px;
+ font-weight: bold;
+ line-height: 2em;
+ font-family: 'Sawarabi Mincho', sans-serif;
+ }
+ 
+ section div p {
+ font-size: 2em;
+ line-height: 30px;
+ font-style: italic;
+ max-width: 960px;
+ text-align: center;
+ margin-left: auto;
+ margin-right: auto;
+ }
