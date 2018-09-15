@@ -73,7 +73,7 @@ a:hover, a:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1000px;
+  height: 1200px;
   min-height: 105px;
   background-image: url(../IMG/hero.jpg);
   background-size: cover;
@@ -125,7 +125,7 @@ a:hover, a:focus {
 
 .small-parallax {
   /*this image is for the short parallax for message area */
-  background-image: url(../IMG/traffic.jpg);
+  background-image: url(../IMG/walkers.jpg);
   color: white;
   min-height: 180px;
   align-self: center;
