@@ -51,6 +51,8 @@ app.get('/saved-searches', function(request, response) {
   response.render('pages/saved-search-intermediate');
 });
 
+app.get('/about', (request, response) => { response.render('pages/about');});
+
 // request saved searches.
 app.post('/saved-searches', showSavedSearches);
 

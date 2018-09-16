@@ -3,36 +3,38 @@
   <div id="background">
   <%-include('../partials/head') %>
   <body>
-      <%- include('../partials/header') %>
-      <div id="page-header">
-        <h2>Login</h2>
-      </div>
-      <div id="page">
-        <form id="login" action="/login" method="post" novalidate>
-          <h3>If you already have an account, just enter your email to log in.</h3>
-          <p>
-            <label>email</label><br>
-            <input id="textbox" type="text" name="email" required>
-          </p>
-          <h3>If you don't yet have an account, please also add user information:</h3>
-          <p>
-            <label>First Name</label><br>
-            <input id="textbox" type="text" name="first" >
-          </p>
-          <p>
-            <label>Last Name</label><br>
-            <input id="textbox" type="text" name="last" >
-          </p>
-          <p>
-            <label>Phone</label><br>
-            <input id="textbox" type="text" name="phone" >
-          </p>
-          <p>
-            <button id="submit" name="submit_button" type="submit">Submit</button>
-          </p>
-        </form> 
-      </div>
-      <%- include('../partials/footer') %>
-    </body>
-  </div>
+
+    <%- include('../partials/header') %>
+    <%- include('../partials/navbar') %>
+    <div id="page-header">
+      <h2>Login</h2>
+    </div>
+    <div id="page">
+      <form id="login" action="/login" method="post" novalidate>
+        <h3>If you already have an account, just enter your email to log in.</h3>
+        <p>
+          <label>email</label><br>
+          <input id="textbox" type="text" name="email" required>
+        </p>
+        <h3>If you don't yet have an account, please also add user information:</h3>
+        <p>
+          <label>First Name</label><br>
+          <input id="textbox" type="text" name="first" >
+        </p>
+        <p>
+          <label>Last Name</label><br>
+          <input id="textbox" type="text" name="last" >
+        </p>
+        <p>
+          <label>Phone</label><br>
+          <input id="textbox" type="text" name="phone" >
+        </p>
+        <p>
+          <button id="submit" name="submit_button" type="submit">Submit</button>
+        </p>
+      </form> 
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+
 </html>
