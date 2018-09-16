@@ -1,9 +1,9 @@
 # Walkhome
-**Author**: Your Name Goes Here
+**Author**: walkhome app by Kevin, Jamilah, James, Mike 
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-As a user, I would like a site that if I am going to buy a house, go on vacation, or rent an apartment, find the walk score of that location or be able to find those places based on a walk score in a neighborhood, city, or address that I provide.
+As a user, I would like app that is visually pleasing and with a simple input to find the walk score of a location  with and address that I provide.
 
 ## Getting Started
 The developer must have a DOTENV file;
