@@ -1,5 +1,5 @@
 # Walkhome
-**Author**: walkhome app by Kevin, Jamilah, James, Mike<br/>
+**Author**: walkhome app by Kevin, Jamilah, James, Mike and Harry<br/>
 **Version**: 1.0.4<br/> 
 
 ## Overview
