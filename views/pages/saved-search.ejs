@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
+  <div id="background">
   <%-include('../partials/head') %>
   <body>
+
     <%- include('../partials/header') %>
     <%- include('../partials/navbar') %>
     <h3 id="savedSearch-head">Saved Searches</h3>
+
+
       <ul id="savedSearch">
-       <li>WalkScore: <%= search[5] %> </li>
-       <li>WalkScore Explanation: <%= search[6] %> </li>
-       <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
+        
+        <li>WalkScore: <%= search[5] %> </li>
+        <li>WalkScore Explanation: <%= search[6] %> </li>
+        <li><strong><a href= <%= search[7] %>>WalkScore Details</a></strong></li>
         <% if(search[0]) { %>
+
         <li>Address: <%= search[0] %></li>
         <% } %>
         <li>City: <%= search[2] %></li>
@@ -26,4 +32,5 @@
      </ul>
     <%- include('../partials/footer') %>
   </body>
+
 </html>
