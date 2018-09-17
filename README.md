@@ -1,27 +1,27 @@
 # Walkhome
-**Author**: walkhome app by Kevin, Jamilah, James, Mike
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Author**: walkhome app by Kevin, Jamilah, James, Mike<br/>
+**Version**: 1.0.4<br/> 
 
 ## Overview
 As a user, I would like app that is visually pleasing and with a simple input to find the walk score of a location  with and address that I provide.
 
 ## Getting Started
-The developer must have a DOTENV file;
-Google API
-Walkscore API
-Postgres
-Visual Studio Code
+The developer must have a DOTENV file;<br/>
+Google API<br/>
+Walkscore API<br/>
+Postgres<br/>
+Visual Studio Code<br/>
 NPM dependencies
 
 ## Architecture
-We used the following APIs:
-Google Maps:
-https://developers.google.com/places/web-service/intro
-WalkScore:
-https://www.walkscore.com/professional/api.php
+We used the following APIs:<br/>
+Google Maps:<br/>
+https://developers.google.com/places/web-service/intro <br/>
+WalkScore: <br/>
+https://www.walkscore.com/professional/api.php <br/>
 
 ## Credits and Collaborations
-Goolge APIs
-https://developers.google.com/places/web-service/intro
-Walkscore API
-https://www.walkscore.com/professional/api.php
+Goolge APIs <br/>
+https://developers.google.com/places/web-service/intro <br/>
+Walkscore API <br/>
+https://www.walkscore.com/professional/api.php <br/>
