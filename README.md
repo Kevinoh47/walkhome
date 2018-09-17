@@ -3,7 +3,7 @@
 **Version**: 1.0.4<br/> 
 
 ## Overview
-As a user, I would like app that is visually pleasing and with a simple input to find the walk score of a location  with and address that I provide.
+As a user, I would like an app that is visually pleasing and with a simple input to find the walk score of a location with and address that I provide. I want the app to be expandable to partner with real estate companies, rental agencies, local restaurants and night-life. These partnerships could create a revenue source for the application. 
 
 ## Getting Started
 The developer must have a DOTENV file;<br/>
