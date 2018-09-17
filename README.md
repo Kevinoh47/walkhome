@@ -2,13 +2,14 @@
 **Version**: 1.0.0  
 
 ## Purpose
+WalkHome is a web application for retrieving "WalkScore" walkability data about addresses and neighborhoods, allowing house hunters and renters to make informed decisions about where they may want to search for housing. Focus your search where you will be able to live without jumping in a car all the time.
 
 ## Authors
-* Kevin O'Halloran- [KevinOh47](https://github.com/KevinOh47)
-* James Denton - [SgtBelly](https://github.com/SgtBelly)
-* Michael Kermes - [BusdriverAK](https://github.com/BusdriverAK)
-* Jamilah McWilliams- [TheJamilah](https://github.com/TheJamilah)
 * HR Hayden - [CodePuff](https://github.com/CodePuff)
+* James Denton - [SgtBelly](https://github.com/SgtBelly)
+* Jamilah McWilliams- [TheJamilah](https://github.com/TheJamilah)
+* Kevin O'Halloran- [KevinOh47](https://github.com/KevinOh47)
+* Michael Kermes - [BusdriverAK](https://github.com/BusdriverAK)
 
 ## Resources
 * MDN Web Docs - (https://developer.mozilla.org)
