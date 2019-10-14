@@ -6,11 +6,12 @@ const pg = require('pg');
 
 const superagent = require('superagent');
 
+const googleKey = process.env.GOOGLE_MAPS_API_KEY;
 const nodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'google',
   httpAdapter: 'https',
-  apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  apiKey: googleKey,
   formatter: null
 };
 const geocoder = nodeGeocoder(options);
@@ -226,3 +227,8 @@ function getNeighborhood(request, response){
 
   return superagent.get(url);
 }
+
+// function getAutoComplete (req, res) {
+//   const input = req.body.address;
+//   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?components=country:us&input=${input}&key=${process.env.GOOGLE_MAPS_API_KEY}&sensor=false`; 
+// }

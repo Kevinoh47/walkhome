@@ -32,7 +32,7 @@ h2 {
   border: 0px;
   background-color: grey;
   padding: 15px;
-  margin: 0px auto 0 px auto;
+  margin: 0px auto 0px auto;
   text-align: center;
 }
 
@@ -101,8 +101,9 @@ nav ul li:hover a {
   display: block;
 }
       #submit_button {
-        color: 25px;
+        color: blue;
         border-radius: 25px;
+        font-family: 'Sawarabi Mincho', sans-serif;
       }
 #lat-long {
   display: none
