@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Kevinoh47/walkhome#readme",
   "dependencies": {
+    "@google/maps": "^1.0.1",
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",

@@ -6,12 +6,11 @@ const pg = require('pg');
 
 const superagent = require('superagent');
 
-const googleKey = process.env.GOOGLE_MAPS_API_KEY;
 const nodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'google',
   httpAdapter: 'https',
-  apiKey: googleKey,
+  apiKey: process.env.GOOGLE_MAPS_API_KEY,
   formatter: null
 };
 const geocoder = nodeGeocoder(options);
@@ -175,6 +174,11 @@ function getAddressData(request, response) {
 
   getNeighborhood(request, response)
     .then(results => {
+
+      // console.log({'getNeighborhood':results.body.results[0].address_components.filter(obj => {
+      //   return obj.types.includes('neighborhood');
+      // })[0]}); //todo remove
+
       myNeighborhood = results.body.results[0].address_components.filter(obj => {
         return obj.types.includes('neighborhood');
       });
@@ -182,19 +186,23 @@ function getAddressData(request, response) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });
+
   getGeocodedData(request, response)
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
     .then(addressArr => {
       response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
     });
-
 }
 
 // Helper functions
 function getGeocodedData(request, response) {
   const {address, zip, city, state} = request.body;
   const formattedAddr = `${address}, ${city}, ${state}, ${zip}`;
+
+  // const myTest = geocoder.geocode(formattedAddr); // todo remove
+  // console.log({myTest}); // todo remove
+
   return geocoder.geocode(formattedAddr);
 }
 
@@ -219,16 +227,17 @@ function prepWalkScoreRequest(results) {
   return url;
 }
 
-function getNeighborhood(request, response){
-  const {address, zip, city, state} = request.body;
-  const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+function getNeighborhood(req, res, next) {
+  try {
+    const {address, zip, city, state} = req.body;
+    const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+    // console.log({'hmmm':process.env.GOOGLE_MAPS_API_KEY, 'url': url}); //todo remove
 
-  return superagent.get(url);
+    return superagent.get(url);
+  } catch(err) {
+    next(err);
+  }
 }
 
-// function getAutoComplete (req, res) {
-//   const input = req.body.address;
-//   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?components=country:us&input=${input}&key=${process.env.GOOGLE_MAPS_API_KEY}&sensor=false`; 
-// }
