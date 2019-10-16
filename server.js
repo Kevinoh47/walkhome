@@ -175,18 +175,26 @@ function getAddressData(request, response) {
   getNeighborhood(request, response)
     .then(results => {
 
+      try {
       // console.log({'getNeighborhood':results.body.results[0].address_components.filter(obj => {
       //   return obj.types.includes('neighborhood');
       // })[0]}); //todo remove
 
-      myNeighborhood = results.body.results[0].address_components.filter(obj => {
-        return obj.types.includes('neighborhood');
-      });
+        if (results.body && results.body.results[0] && results.body.results[0].address_components) {
+          myNeighborhood = results.body.results[0].address_components.filter(obj => {
+            return obj.types.includes('neighborhood');
+          });
+        }
+      } catch(err) {
+        console.error(err);
+      }
+
       if(myNeighborhood && myNeighborhood[0] && (myNeighborhood[0].short_name || myNeighborhood[0].long_name)) {
         hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
       }
     });
 
+  // TODO can I get the picture in the promise chain below???
   getGeocodedData(request, response)
     .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
     .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
