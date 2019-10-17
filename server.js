@@ -171,23 +171,46 @@ function saveSearch(request, response) {
 function getAddressData(request, response) {
   let myNeighborhood = [];
   let hoodStr = 'Unknown';
+  let myAddressArr = [];
+  let streetViewUrl = '';
 
   getNeighborhood(request, response)
-    .then(results => {
-      myNeighborhood = results.body.results[0].address_components.filter(obj => {
-        return obj.types.includes('neighborhood');
-      });
-      if(myNeighborhood && myNeighborhood[0] && (myNeighborhood[0].short_name || myNeighborhood[0].long_name)) {
-        hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
+  .then(results => {
+    try {
+      if (results.body && results.body.results[0] && results.body.results[0].address_components) {
+        myNeighborhood = results.body.results[0].address_components.filter(obj => {
+          return obj.types.includes('neighborhood');
+        });
       }
-    });
-  getGeocodedData(request, response)
-    .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
-    .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
-    .then(addressArr => {
-      response.render('pages/address-results', {walkScoreInfo: addressArr, neighborhood: hoodStr});
-    });
+    } catch(err) {
+      console.error(err);
+    }
 
+    if(myNeighborhood && myNeighborhood[0] && (myNeighborhood[0].short_name || myNeighborhood[0].long_name)) {
+      hoodStr = (myNeighborhood[0].short_name) ? myNeighborhood[0].short_name : myNeighborhood[0].long_name;
+    }
+  });
+
+  getGeocodedData(request, response)
+  .then(geocodedResults => prepWalkScoreRequest(geocodedResults))
+  .then(walkScoreUrl => getWalkScore(request, response, walkScoreUrl))
+  .then(addressArr =>  { 
+    myAddressArr = [...addressArr];
+
+    let myAddressStr = `${myAddressArr[0].address}%20${myAddressArr[0].city}%20${myAddressArr[0].state}%20${myAddressArr[0].zip}`;
+
+    let cleanedAddr = myAddressStr.replace(/ /g, '%20').replace(/#/g,'');
+
+    // TODO: add google singnature per https://developers.google.com/maps/documentation/streetview/get-api-key#sample-code-for-url-signing
+    streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${cleanedAddr}&size=300x300&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+  })
+  .then(() => {
+    if (streetViewUrl.length) {
+      response.render('pages/address-results', {walkScoreInfo: myAddressArr, neighborhood: hoodStr, streetView: streetViewUrl})
+    } else {
+      response.render('pages/address-results', {walkScoreInfo: myAddressArr, neighborhood: hoodStr})
+    }
+  });
 }
 
 // Helper functions
@@ -197,8 +220,8 @@ function getGeocodedData(request, response) {
   return geocoder.geocode(formattedAddr);
 }
 
-function getWalkScore(request, response, walkScoreUrl){
-  return superagent.get(walkScoreUrl)
+async function getWalkScore(request, response, walkScoreUrl){
+  return await superagent.get(walkScoreUrl)
     .then(walkScore => {
       let addressArr = [];
       addressArr.push(request.body); //address data
@@ -206,7 +229,7 @@ function getWalkScore(request, response, walkScoreUrl){
       return addressArr;
     })
     .catch(function(err) {
-      console.log({err});
+      console.error({err});
     });
 }
 
@@ -218,11 +241,15 @@ function prepWalkScoreRequest(results) {
   return url;
 }
 
-function getNeighborhood(request, response){
-  const {address, zip, city, state} = request.body;
-  const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+async function getNeighborhood(req, res, next) {
+  try {
+    const {address, zip, city, state} = req.body;
+    const myAddress = `${address}, ${city}, ${state}, ${zip}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
-
-  return superagent.get(url);
+    return await superagent.get(url);
+  } catch(err) {
+    next(err);
+  }
 }
+

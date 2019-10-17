@@ -53,12 +53,15 @@ nav {
 }
 
 #footer {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
-  text-align: center;
+  text-align: left;
   color: whitesmoke;
   background-color: darkblue;
   font-family: 'Pacifico', cursive;
+  margin: 30px auto 10px auto;
+  padding: 30px;
+  
 }
 
 .fill{
@@ -114,6 +117,8 @@ height: 25%;
   color: whitesmoke;
   border-radius: 25px;
   border-color: transparent;
+  font-family: 'Noto Serif KR', sans-serif;
+  padding: 15px auto 15px auto;
 }
 
 #textbox{
@@ -176,7 +181,6 @@ height: 25%;
 #page-header{
   max-width: 940px;
   margin: 10px auto 0px auto;
-  padding: 20px;
   background-color: darkblue;
   opacity: 0.95;
   font-family: 'Noto Serif KR', sans-serif;
@@ -201,6 +205,14 @@ height: 25%;
   border-bottom-left-radius: 25px;
   width: 300px;
   padding: 25px;
+}
+
+#login{
+  margin: 0px auto 10px auto;
+}
+#login p{
+  display: flex;
+  flex-direction: column;
 }
 
 #error {
@@ -231,7 +243,7 @@ height: 25%;
   width: 60%;
   margin: auto;
   height: 100%;
-  z-index: 0S;
+  z-index: 0;
 }
 
 
