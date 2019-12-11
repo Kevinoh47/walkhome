@@ -215,6 +215,11 @@ height: 25%;
   flex-direction: column;
 }
 
+#find-address-info p{
+  display: flex;
+  flex-direction: column;
+}
+
 #error {
   max-width: 940px;
   margin: 0px auto 10px auto;
